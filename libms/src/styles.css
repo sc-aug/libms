@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* layout css */
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #eee;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.navbar {
+  background-color: #ccc;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  background-color: #eee;
+}
+
+.footer p {
+  text-align: center;
+  margin: 20px 0;
+}

@@ -1,0 +1,15 @@
+.book-wrapper {
+    width: 100%;
+}
+
+.book-item {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    margin: 5px 0px 5px 0px;
+    width: 100%;
+}
+
+.book-item:hover {
+    background-color: white;
+}
