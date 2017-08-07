@@ -16,4 +16,9 @@ export class AppComponent {
       new Book('Old Man And The Sea', 'Ernest Hemingway', 'Scribner; Reissue edition', '1995', 'English'),
       new Book('Walden', 'Henry David Thoreau', 'CreateSpace Independent Publishing Platform', '2017', 'English')];
   }
+
+  bookWasSelected(book: Book): void {
+    console.log('++Book selected: ', book.title);
+  }
+  
 }

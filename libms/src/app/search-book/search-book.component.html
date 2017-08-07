@@ -1,0 +1,24 @@
+<!-- <form #f="ngForm"
+  (ngSubmit)="onSubmit(f.value)">
+  <div class="form-group">
+    <div class="col-sm-10">
+      <input type="text" name="searchBook" class="form-control" ngModel>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </div>
+</form>
+ -->
+<form [formGroup]="myForm"
+  (ngSubmit)="onSubmit(myForm.value)">
+  <div class="form-group">
+    <div class="col-sm-10">
+      <input type="text" name="searchBook" placeholder="Book Title/Author/Keywords" class="form-control"
+      [formControl]="myForm.controls['searchBook']">
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </div>
+</form>

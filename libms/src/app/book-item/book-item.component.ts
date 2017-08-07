@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Book } from '../book.model';
 
 @Component({
@@ -8,9 +8,13 @@ import { Book } from '../book.model';
 })
 export class BookItemComponent implements OnInit {
   @Input() book: Book;
-  
+
   constructor() {
   }
+
+  // test(): void {
+  //   console.log(this.book.title);
+  // }
 
   ngOnInit() {
   }

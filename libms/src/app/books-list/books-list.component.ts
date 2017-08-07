@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Book } from '../book.model';
 
 @Component({
@@ -8,14 +8,26 @@ import { Book } from '../book.model';
 })
 export class BooksListComponent implements OnInit {
   @Input() books: Book[];
+
+  @Output() onBookSelected: EventEmitter<Book>;
   
+  private curBook: Book;
+
   constructor() {
-    // this.books = [
-    //   new Book('American Nations: A History of the Eleven Rival Regional Cultures of North America', 'Colin Woodard', 'Penguin Books', '2012', 'English'),
-    //   new Book('One Hundred Years of Solitude', 'Gabriel García Márquez', 'Harper Perennial Modern Classics', '2006', 'English'),
-    //   new Book('Old Man And The Sea', 'Ernest Hemingway', 'Scribner; Reissue edition', '1995', 'English'),
-    //   new Book('Walden', 'Henry David Thoreau', 'CreateSpace Independent Publishing Platform', '2017', 'English')];
+    this.onBookSelected = new EventEmitter();
   }
+
+  clicked(book: Book): void {
+    this.curBook = book;
+    this.onBookSelected.emit(book);
+  }
+
+  // isSelected(book: Book): boolean {
+  //   if (!book || !this.curBook) {
+  //     return false;
+  //   }
+  //   return book.title === this.curBook.title;
+  // }
 
   ngOnInit() {
   }
