@@ -25,12 +25,14 @@ npm install bootstrap@3 jquery --save
 
 In `.angular-cli.json`, add
 ```
+...
 "styles": [
-    "styles.css",
-    "../node_modules/bootstrap/dist/css/bootstrap.min.css"
-  ],
-  "scripts": [
+    "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "styles.css"
+],
+"scripts": [
     "../node_modules/jquery/dist/jquery.min.js",
     "../node_modules/bootstrap/dist/js/bootstrap.min.js"
-  ],
+]
+...
 ```
