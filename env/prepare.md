@@ -36,3 +36,8 @@ In `.angular-cli.json`, add
 ]
 ...
 ```
+
+## Combine Express
+```
+npm install --save express body-parser
+```
