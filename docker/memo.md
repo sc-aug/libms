@@ -37,7 +37,16 @@ In `.angular-cli.json`, add
 ...
 ```
 
-## Combine Express
+## Angular Combine Express
 ```
 npm install --save express body-parser
 ```
+
+## Using mongoose validator
+
+```
+mongoose-unique-validator
+```
+
+## Angular App URL with hash sign `#`
+[link](https://stackoverflow.com/questions/41687562/angular-2-remove-hash-from-the-url)
