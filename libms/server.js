@@ -3,11 +3,18 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose'); // [SC] db
 
 // Get our API routes
 const api = require('./server/routes/api');
+const account = require('./server/routes/account');
+const book = require('./server/routes/book');
 
 const app = express();
+
+// [SC] conn mongoose
+const DB = 'mylib';
+mongoose.connect('mongodb://mymongo:27017/'+DB, {useMongoClient: true});
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -17,6 +24,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
+app.use('/api/account', account);
+app.use('/api/book', book);
 app.use('/api', api);
 
 // Catch all other routes and return the index file

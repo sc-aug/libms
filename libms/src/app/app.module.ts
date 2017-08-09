@@ -12,6 +12,7 @@ import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { RegisterComponent } from './register/register.component';
+import { ResultListComponent } from './result-list/result-list.component';
 
 const routes: Routes = [
   // basic routes
@@ -52,12 +53,13 @@ const routes: Routes = [
     AboutComponent,
     LoginComponent,
     AccountComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResultListComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   providers: [],
   bootstrap: [AppComponent]

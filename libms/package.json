@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 7000 --host 0.0.0.0",
+    "start": "node server.js --port 7000 --host 0.0.0.0",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -26,6 +26,8 @@
     "core-js": "^2.4.1",
     "express": "^4.15.4",
     "jquery": "^3.2.1",
+    "mongoose": "^4.11.6",
+    "mongoose-unique-validator": "^1.0.5",
     "rxjs": "^5.4.1",
     "zone.js": "^0.8.14"
   },
