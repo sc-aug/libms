@@ -1,16 +1,24 @@
 <div class="container">
-  <form class="auth-form">
+  <form class="auth-form col-sm-6 col-sm-offset-3"
+    [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+    <input type="email" id="inputEmail"
+          class="form-control" placeholder="Email address" required="" autofocus=""
+          formControlName="email">
 
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+    <input type="password" id="inputPassword"
+          class="form-control" placeholder="Password" required=""
+          formControlName="passwd">
 
     <label for="inputName" class="sr-only">Username</label>
-    <input type="text" id="inputName" class="form-control" placeholder="Username" required="">
+    <input type="text" id="inputName"
+          class="form-control" placeholder="Username" required=""
+          formControlName="uname">
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit"
+          [disabled]="!signupForm.valid">Sign up</button>
   </form>
 
 </div>

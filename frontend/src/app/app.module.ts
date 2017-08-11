@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavTopComponent } from './share/nav-top.component';
@@ -16,19 +18,7 @@ import { SigninComponent } from './auth/signin.component';
 import { SignupComponent } from './auth/signup.component';
 import { LogoutComponent } from './auth/logout.component';
 
-
-import { AUTH_ROUTES } from './auth/auth.routes';
-
-const routes: Routes = [
-  // basic routes
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'search', component: SearchComponent },
-  { path: 'auth', component: AuthenticationComponent, children: AUTH_ROUTES }
-
-  // all other routes and finally at the last add
-  // { path: '**', redirectTo: 'home' }
-];
+import { appRouting } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -48,7 +38,10 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes, { useHash: true })
+    ReactiveFormsModule,
+    FormsModule,
+    HttpModule,
+    appRouting
   ],
   providers: [],
   bootstrap: [AppComponent]
