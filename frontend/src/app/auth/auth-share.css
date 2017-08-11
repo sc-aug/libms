@@ -1,0 +1,38 @@
+button {
+  margin-top: 20px;
+}
+
+.auth-form {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.auth-form .checkbox {
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+.auth-form .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.auth-form .form-control:focus {
+  z-index: 2;
+}
+.auth-form input {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.col-form-label {
+  text-align: right;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}

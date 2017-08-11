@@ -1,0 +1,14 @@
+<!-- <div>{{account.name}}</div>
+ -->
+<ul class="nav navbar-nav navbar-right">
+  <li class="" *ngIf="account == null">
+    <a [routerLink]="['/auth/signin']">
+    Sign in</a>
+  </li>
+  <li class="" *ngIf="account != null">
+    <a href="">{{ account.getName() }}</a>
+  </li>
+  <li class="" *ngIf="account != null">
+    <a href="">Mange</a>
+  </li>
+</ul>

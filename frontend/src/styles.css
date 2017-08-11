@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* layout css */
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #fff;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
