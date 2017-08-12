@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from './home.component';
 import { AuthenticationComponent } from './auth/authentication.component';
 import { SearchComponent } from './book/search.component';
+import { ProfileComponent } from './auth/profile.component';
 
 import { AUTH_ROUTES } from './auth/auth.routes';
 
@@ -11,7 +12,8 @@ const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'auth', component: AuthenticationComponent, children: AUTH_ROUTES }
+  { path: 'auth', component: AuthenticationComponent, children: AUTH_ROUTES },
+  { path: 'profile', component: ProfileComponent }
 
   // all other routes and finally at the last add
   // { path: '**', redirectTo: 'home' }

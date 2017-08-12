@@ -1,5 +1,3 @@
-<!-- <div>{{account.name}}</div>
- -->
 <ul class="nav navbar-nav navbar-right">
   <!-- not sign in-->
   <li class="" *ngIf="!isLoggedIn()">
@@ -8,10 +6,10 @@
 
   <!-- sign in -->
   <li class="dropdown" *ngIf="isLoggedIn()">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ status.accName }}({{ status.accAuth }})<span class="caret"></span></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ status.uname }}({{ status.auth }})<span class="caret"></span></a>
     <ul class="dropdown-menu">
       <li><a [routerLink]="['/auth/logout']">Logout</a></li>
-      <li><a [routerLink]="['/auth/profile']">Profile</a></li>
+      <li><a [routerLink]="['/profile']">Profile</a></li>
       <li role="separator" class="divider"></li>
       <li><a href="#">Books</a></li>
       <li role="separator" class="divider"></li>

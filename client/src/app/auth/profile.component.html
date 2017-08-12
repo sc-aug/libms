@@ -1,0 +1,49 @@
+<div class="container">
+  <form class="form-horizontal"
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="inputEmail"
+      class="col-sm-2 col-sm-offset-2 control-label">Email</label>
+      <div class="col-sm-5">
+        <input type="email" class="form-control" id="inputEmail3"
+        placeholder="Email Address" required=""
+        [(ngModel)]="acc.email"
+        formControlName="email">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputUsername"
+      class="col-sm-2 col-sm-offset-2 control-label">Username</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputUsername"
+        placeholder="Username" required=""
+        [(ngModel)]="acc.uname"
+        formControlName="uname">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputAuth"
+      class="col-sm-2 col-sm-offset-2 control-label">Authentication</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputAuth" value="member"
+        [(ngModel)]="acc.auth"
+        formControlName="auth" disabled>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-5">
+        <button type="submit" class="btn btn-primary"
+        [disabled]="!profileForm.valid">Update</button>
+        <button type="submit" class="btn btn-default pull-right"
+        [routerLink]="['/home']">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>

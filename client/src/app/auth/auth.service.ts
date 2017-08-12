@@ -30,6 +30,25 @@ export class AuthService{
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  fetchAccount(uname: string) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.get('http://localhost:9000/api/account/'+uname, { headers: headers})
+      // transform the data we get back
+      .map((response: Response) => response.json())
+      // catch error
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  updateAccount(uname: string, account: Account) {
+    const body = JSON.stringify(account);
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post('http://localhost:9000/api/account/'+uname, body, { headers: headers})
+      // transform the data we get back
+      .map((response: Response) => response.json())
+      // catch error
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   logout() {
     localStorage.clear();
   }
@@ -37,4 +56,5 @@ export class AuthService{
   isLoggedIn() {
     return localStorage.getItem('token') != null;
   }
+
 }

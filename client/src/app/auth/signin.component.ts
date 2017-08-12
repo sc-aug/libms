@@ -24,15 +24,15 @@ export class SigninComponent implements OnInit {
         data => {
           // storage in browser, javascript object
           localStorage.setItem('token', data.token);
-          localStorage.setItem('accId', data.accId);
-          localStorage.setItem('accName', data.accName);
-          localStorage.setItem('accAuth', data.accAuth);
+          localStorage.setItem('_id', data._id);
+          localStorage.setItem('uname', data.uname);
+          localStorage.setItem('email', data.email);
+          localStorage.setItem('auth', data.auth);
           // this.router.navigate(['/']);
           this.router.navigateByUrl('/');
         },
         err => console.error(err)
       );
-    // 
     
     this.signinForm.reset();
   }

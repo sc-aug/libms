@@ -17,6 +17,7 @@ import { AuthenticationComponent } from './auth/authentication.component';
 import { SigninComponent } from './auth/signin.component';
 import { SignupComponent } from './auth/signup.component';
 import { LogoutComponent } from './auth/logout.component';
+import { ProfileComponent } from './auth/profile.component';
 
 import { appRouting } from './app.routing';
 import { AuthService } from './auth/auth.service';
@@ -35,7 +36,8 @@ import { AuthService } from './auth/auth.service';
     SigninComponent,
     SignupComponent,
     LogoutComponent,
-    NavAccountComponent
+    NavAccountComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
