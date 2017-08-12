@@ -5,7 +5,10 @@ var jwt = require('jsonwebtoken');
 
 var Account = require('../models/account');
 
-// signup
+/**
+ * signup api
+ * no protect required
+ */
 router.post('/', function(req, res) {
     console.log(req.body);
     var acc = new Account({
@@ -31,7 +34,10 @@ router.post('/', function(req, res) {
     });
 });
 
-// signin
+/**
+ * signin api
+ * no protect required
+ */
 router.post('/signin', function(req, res, next) {
     // retriving user by email
     // compare hashed password
@@ -63,27 +69,104 @@ router.post('/signin', function(req, res, next) {
         res.status(200).json({
             message: 'Successfully logged in',
             token: token,
-            accId: acc._id,
-            accName: acc.uname,
-            accAuth: acc.auth
+            _id: acc._id,
+            uname: acc.uname,
+            auth: acc.auth,
+            email: acc.email
         });
     })
 });
 
-// Only for oneself and admin
+/**
+ * check token validation
+ * protect apis blow
+ */
+// router.use('/', function(req, res, next) { // this will be reach at each requst
+//     jwt.verify(req.query.token, 'my-secret-key', function(err, decoded) {
+//         if (err) {
+//             return res.status(401).json({
+//                 title: 'Not Authenticated',
+//                 error: err
+//             });
+//         }
+//         next(); // make sure request reaches code blow
+//     })
+// });
+
+/**
+ * profile - fetch
+ * only available to the person and admin
+ * token required
+ */
 router.get('/:uname', function(req, res) {
      Account.findOne({ uname: req.params.uname }, function(err, acc) {
         if (err) {
             console.error('error: ', err);
-        } else {
-            res.json(acc);
+            // status 500 server side error
+            return res.status(500).json({
+                title: 'An error occured',
+                error: err
+            });
         }
-     });
+        // check exististance of account
+        if (! acc) {
+            return res.status(500).json({
+                title: 'No account found',
+                error: { message: 'Account could not be found'}
+            });
+        }
+        res.status(200).json(acc);
+    });
 });
 
-// Only for admin
-// get all account.
-// not secure, for testing only
+/**
+ * profile - update
+ * only available to the person and admin
+ * token required
+ */
+router.post('/:uname', function(req, res) {
+    Account.findOne({ uname: req.params.uname }, function(err, acc) {
+        if (err) {
+            console.error('error: ', err);
+            // status 500 server side error
+            return res.status(500).json({
+                title: 'An error occured',
+                error: err
+            });
+        }
+        // check exististance of account
+        if (! acc) {
+            return res.status(500).json({
+                title: 'No account found',
+                error: { message: 'Account could not be found'}
+            });
+        }
+        acc.email = req.body.email;
+        acc.uname = req.body.uname;
+
+        acc.save(function(err, result) {
+            if (err) {
+                console.error('error: ', err);
+                // status 500 server side error
+                return res.status(500).json({
+                    title: 'An error occured while update account data',
+                    error: err
+                });
+            }
+            // 202: accepted
+            res.status(202).json({
+                message: 'Account Updated',
+                obj: result
+            });
+        });
+    });
+});
+
+/**
+ * all account
+ * only available to admin
+ * token required
+ */
 router.get('/', function(req, res) {
     Account.find({}, function(err, accounts) {
         if (err) throw err;
