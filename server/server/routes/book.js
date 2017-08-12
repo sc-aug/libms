@@ -3,12 +3,12 @@ var router = express.Router();
 var Book = require('../models/book');
 
 // get all books - testing
-router.get('/', function(req, res) {
-    Book.find({}, function(err, books) {
-        if (err) throw err;
-        return res.json(books);
-    });
-});
+// router.get('/', function(req, res) {
+//     Book.find({}, function(err, books) {
+//         if (err) throw err;
+//         return res.json(books);
+//     });
+// });
 
 router.post('/', function(req, res) {
     var bk = new Book({

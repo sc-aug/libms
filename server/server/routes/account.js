@@ -167,10 +167,25 @@ router.post('/:uname', function(req, res) {
  * only available to admin
  * token required
  */
-router.get('/', function(req, res) {
-    Account.find({}, function(err, accounts) {
-        if (err) throw err;
-        return res.json(accounts);
+router.get('/auth/:auth', function(req, res) {
+    Account.find({ auth: req.params.auth }, function(err, accs) {
+        if (err) {
+            console.error('error: ', err);
+            // status 500 server side error
+            return res.status(500).json({
+                title: 'An error occured',
+                error: err
+            });
+        }
+        // check exististance of account
+        if (! accs) {
+            return res.status(500).json({
+                title: 'No account found',
+                error: { message: 'No account found'}
+            });
+        }
+        
+        res.status(200).json(accs);
     });
 });
 

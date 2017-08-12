@@ -12,6 +12,9 @@ import { HomeComponent } from './home.component';
 import { SearchFormComponent } from './book/search-form.component';
 import { SearchComponent } from './book/search.component';
 import { BookListComponent } from './book/book-list.component';
+
+import { ResultListComponent } from './book/result-list.component';
+
 import { BookItemComponent } from './book/book-item.component';
 import { AuthenticationComponent } from './auth/authentication.component';
 import { SigninComponent } from './auth/signin.component';
@@ -21,7 +24,7 @@ import { ProfileComponent } from './auth/profile.component';
 
 import { appRouting } from './app.routing';
 import { AuthService } from './auth/auth.service';
-import { BookService } from './book/book.service';
+import { SearchService } from './book/search.service';
 import { SharedService } from './book/shared.service';
 
 @NgModule({
@@ -33,6 +36,10 @@ import { SharedService } from './book/shared.service';
     SearchFormComponent,
     SearchComponent,
     BookListComponent,
+
+    ResultListComponent,
+
+
     BookItemComponent,
     AuthenticationComponent,
     SigninComponent,
@@ -50,7 +57,7 @@ import { SharedService } from './book/shared.service';
   ],
   providers: [
     AuthService,
-    BookService,
+    SearchService,
     SharedService
   ],
   bootstrap: [AppComponent]

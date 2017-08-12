@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { Book } from './book.model';
 
 @Injectable()
-export class BookService{
+export class SearchService{
   constructor(private http: Http) {}
 
   searchBook(keywords: string) {

@@ -3,12 +3,12 @@ var router = express.Router();
 var Book = require('../models/book');
 
 router.get('/:keywords', function(req, res) {
-    var regex = req.params.keywords
-    console.log(regex);
+    var kw = req.params.keywords
+    console.log(kw);
     Book.find({ title: {
-        $regex: req.params.keywords,
+        $regex: kw,
         $options: 'i' }
-    }, function(err, books) {
+    }, function(err, b1) {
         if (err) {
             console.error('error: ', err);
             // status 500 server side error
@@ -17,7 +17,22 @@ router.get('/:keywords', function(req, res) {
                 error: err
             });
         }
-        res.status(200).json(books);
+
+        Book.find({ author: {
+            $regex: kw,
+            $options: 'i' }
+        }, function(err, b2) {
+            if (err) {
+                console.error('error: ', err);
+                // status 500 server side error
+                return res.status(500).json({
+                    title: 'An error occured [search book]',
+                    error: err
+                });
+            }
+            // might have duplicate result
+            res.status(200).json(b1.concat(b2));
+        });
     });
 });
 
