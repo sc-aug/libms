@@ -1,4 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { BookService } from './book.service';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-search-form',
@@ -6,10 +11,29 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./search-form.component.css']
 })
 export class SearchFormComponent {
-  constructor() {
+  constructor(private bookService: BookService,
+    private sharedService: SharedService,
+    private router: Router) {
   }
 
-  onClick() {
+  /*
+   * search book
+   * publish result
+   */
+  onSubmit(data: any) {
+    // search books
+    if (data.search.trim().length >= 3) {
+      this.bookService.searchBook(data.search.trim()).
+        subscribe(
+          data => {
+            // this.sharedService.publishData(JSON.stringify(data));
+            console.log(data);
+            this.sharedService.publishData(data);
+          },
+          err => console.log(err));
+    } else {
+      console.error("keywords too short");
+    }
   }
 
 }

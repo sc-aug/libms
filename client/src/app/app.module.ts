@@ -21,6 +21,8 @@ import { ProfileComponent } from './auth/profile.component';
 
 import { appRouting } from './app.routing';
 import { AuthService } from './auth/auth.service';
+import { BookService } from './book/book.service';
+import { SharedService } from './book/shared.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,11 @@ import { AuthService } from './auth/auth.service';
     HttpModule,
     appRouting
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    BookService,
+    SharedService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
