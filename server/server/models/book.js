@@ -2,7 +2,7 @@ var mongooseUniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var schema = new Schema({
+var BookSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true },
     remain: { type: Number, required: true},
     copy: { type: Number, required: true},
@@ -12,9 +12,10 @@ var schema = new Schema({
     year: { type: Number, required: true },
     language: { type: String, required: true },
     subjects: {type: [String], required: true },
-    discription: { type: String, required: true }
+    discription: { type: String, required: true },
+    borrower: [{type: Schema.Types.ObjectId, ref: 'Account'}]
 }, { collection: 'books'});
 
-schema.plugin(mongooseUniqueValidator);
+BookSchema.plugin(mongooseUniqueValidator);
 
-module.exports = mongoose.model('Book', schema);
+module.exports = mongoose.model('Book', BookSchema);
