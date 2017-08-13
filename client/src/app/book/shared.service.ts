@@ -6,14 +6,24 @@ import { Subject }    from 'rxjs/Subject';
 export class SharedService {
   //private caseNumber: any;
 
-  // Observable string sources
-  private searchResult = new Subject<any>();  
-
-  // Observable streams
+  /*
+   * Observable
+   * search result
+   */
+  private searchResult = new Subject<any>();
   searchResult$ = this.searchResult.asObservable();
-
-    // Service message commands
-  publishData(data: any) {
+  publishSearchResult(data: any) {
     this.searchResult.next(data);
   }
+
+  /*
+   * Observable
+   * current book
+   */
+  private currentBook = new Subject<any>();
+  currentBook$ = this.currentBook.asObservable();
+  publishCurrentBook(data: any) {
+    this.currentBook.next(data);
+  }
+
 }

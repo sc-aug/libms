@@ -17,11 +17,8 @@ export class ResultListComponent {
     this.sharedService.searchResult$
       .subscribe(data => {
         // console.log('receive ' + data);
-        this.update(data);
+        this.books = data;
       });
   }
 
-  update(books: Book[]) {
-    this.books = books;
-  }
 }

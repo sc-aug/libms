@@ -3,16 +3,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var BookSchema = new Schema({
-    _id: { type: Schema.Types.ObjectId, required: true },
     remain: { type: Number, required: true},
     copy: { type: Number, required: true},
     title: { type: String, required: true, unique: true },
     author: { type: String, required: true },
     publisher: { type: String, required: true },
     year: { type: Number, required: true },
-    language: { type: String, required: true },
+    lang: { type: String, required: true },
     subjects: {type: [String], required: true },
-    discription: { type: String, required: true },
+    description: { type: String, required: true },
     borrower: [{type: Schema.Types.ObjectId, ref: 'Account'}]
 }, { collection: 'books'});
 

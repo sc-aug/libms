@@ -4,8 +4,10 @@ import { HomeComponent } from './home.component';
 import { AuthenticationComponent } from './auth/authentication.component';
 import { SearchComponent } from './book/search.component';
 import { ProfileComponent } from './auth/profile.component';
+import { BookOptComponent } from './book/book-opt.component';
 
 import { AUTH_ROUTES } from './auth/auth.routes';
+import { BOOK_ROUTES } from './book/book.routes';
 
 const APP_ROUTES: Routes = [
   // basic routes
@@ -13,10 +15,11 @@ const APP_ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'search', component: SearchComponent },
   { path: 'auth', component: AuthenticationComponent, children: AUTH_ROUTES },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'book-opt', component: BookOptComponent, children: BOOK_ROUTES },
 
   // all other routes and finally at the last add
-  // { path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: 'home' }
 ];
 
 export const appRouting = RouterModule.forRoot(APP_ROUTES, { useHash: true });

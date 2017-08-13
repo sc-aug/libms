@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { SearchService } from './search.service';
+import { BookService } from './book.service';
 import { SharedService } from './shared.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { SharedService } from './shared.service';
   styleUrls: ['./search-form.component.css']
 })
 export class SearchFormComponent {
-  constructor(private searchService: SearchService,
+  constructor(private bookService: BookService,
     private sharedService: SharedService,
     private router: Router) {
   }
@@ -23,12 +23,11 @@ export class SearchFormComponent {
   onSubmit(data: any) {
     // search books
     if (data.search.trim().length >= 3) {
-      this.searchService.searchBook(data.search.trim()).
+      this.bookService.searchBook(data.search.trim()).
         subscribe(
           data => {
-            // this.sharedService.publishData(JSON.stringify(data));
             console.log(data);
-            this.sharedService.publishData(data);
+            this.sharedService.publishSearchResult(data);
           },
           err => console.log(err));
       this.router.navigateByUrl('/search');
