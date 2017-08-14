@@ -1,8 +1,24 @@
-## Global Module Install
+# Front-end
 ```
 npm install -g typescript
 npm install -g --unsafe-perm @angular/cli
 ```
+
+# Back-end
+```
+npm install -g nodemon
+npm install --save bcryptjs
+npm install --save jsonwebtoken
+npm install --save mongoose-searchable
+```
+* nodemon: auto restart service when server-side file changes
+* bcryptjs: password encryption
+* jwt: for authentication
+* mongoose-searchable: different fields search (e.g. book title & author)
+
+---
+
+# Trifle Content
 
 ## Issues
 install angular cli on docker[node:8.2.1-wheezy]
@@ -50,3 +66,4 @@ mongoose-unique-validator
 
 ## Angular App URL with hash sign `#`
 [link](https://stackoverflow.com/questions/41687562/angular-2-remove-hash-from-the-url)
+
