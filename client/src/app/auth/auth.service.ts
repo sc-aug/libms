@@ -6,14 +6,16 @@ import { Observable } from 'rxjs';
 
 import { Account } from './account.model';
 
+const baseurl = 'http://localhost:9000';
+const headers = new Headers({'Content-Type': 'application/json'});
+
 @Injectable()
 export class AuthService{
   constructor(private http: Http) {}
 
   signup(account: Account) {
     const body = JSON.stringify(account);
-    const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post('http://localhost:9000/api/account', body, { headers: headers})
+    return this.http.post(baseurl+'/api/account', body, { headers: headers})
       // transform the data we get back
       .map((response: Response) => response.json())
       // catch error
@@ -22,31 +24,34 @@ export class AuthService{
 
   signin(account: Account) {
     const body = JSON.stringify(account);
-    const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post('http://localhost:9000/api/account/signin', body, { headers: headers})
-      // transform the data we get back
+    return this.http.post(baseurl+'/api/account/signin', body, { headers: headers})
       .map((response: Response) => response.json())
-      // catch error
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  fetchAccountById(_id: string) {
+    return this.http.get(baseurl+'/api/account/id/'+_id, { headers: headers})
+      .map((response: Response) => response.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
   fetchAccount(uname: string) {
-    const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.get('http://localhost:9000/api/account/'+uname, { headers: headers})
-      // transform the data we get back
+    return this.http.get(baseurl+'/api/account/'+uname, { headers: headers})
       .map((response: Response) => response.json())
-      // catch error
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
   updateAccount(uname: string, account: Account) {
     const body = JSON.stringify(account);
-    const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post('http://localhost:9000/api/account/'+uname, body, { headers: headers})
-      // transform the data we get back
+    return this.http.post(baseurl+'/api/account/'+uname, body, { headers: headers})
       .map((response: Response) => response.json())
-      // catch error
       .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  fetchAllMembers() {
+    return this.http.get(baseurl+'/api/account/auth/'+'member', { headers: headers })
+      .map((response: Response) => response.json())
+      .catch((error: Response) => Observable.throw(error.json())).toPromise();
   }
 
   logout() {

@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var BookSchema = new Schema({
+    // _id: { type: Schema.Types.ObjectId },
     remain: { type: Number, required: true},
     copy: { type: Number, required: true},
     title: { type: String, required: true, unique: true },

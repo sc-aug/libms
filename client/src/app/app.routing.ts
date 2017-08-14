@@ -5,9 +5,11 @@ import { AuthenticationComponent } from './auth/authentication.component';
 import { SearchComponent } from './book/search.component';
 import { ProfileComponent } from './auth/profile.component';
 import { BookOptComponent } from './book/book-opt.component';
+import { TransactionComponent } from './trans/transaction.component';
 
 import { AUTH_ROUTES } from './auth/auth.routes';
 import { BOOK_ROUTES } from './book/book.routes';
+import { TRANS_ROUTES } from './trans/trans.routes';
 
 const APP_ROUTES: Routes = [
   // basic routes
@@ -17,6 +19,7 @@ const APP_ROUTES: Routes = [
   { path: 'auth', component: AuthenticationComponent, children: AUTH_ROUTES },
   { path: 'profile', component: ProfileComponent },
   { path: 'book-opt', component: BookOptComponent, children: BOOK_ROUTES },
+  { path: 'trans', component: TransactionComponent, children: TRANS_ROUTES },
 
   // all other routes and finally at the last add
   { path: '**', redirectTo: 'home' }

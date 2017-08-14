@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from './auth.service';
@@ -13,12 +14,13 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
   // inject service
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     console.log(this.signupForm.value);
     // create a new account
     const acc = new Account(
+      "",
       this.signupForm.value.email,
       this.signupForm.value.passwd,
       this.signupForm.value.uname);
@@ -28,7 +30,8 @@ export class SignupComponent implements OnInit {
           data => console.log(data),
           err => console.log(err)
         );
-    this.signupForm.reset();
+    // this.signupForm.reset();
+    this.router.navigate(['/auth', 'signin']);
   }
 
   ngOnInit() {

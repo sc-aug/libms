@@ -26,11 +26,17 @@ import { BookAddComponent } from './book/book-add.component';
 import { BookEditComponent } from './book/book-edit.component';
 import { BookViewComponent } from './book/book-view.component';
 
+import { TransactionComponent } from './trans/transaction.component';
+import { BorrowComponent } from './trans/borrow.component';
+import { ReturnComponent } from './trans/return.component';
+import { LoadDataComponent } from './trans/load-data.component';
+
 import { appRouting } from './app.routing';
-//
+
 import { AuthService } from './auth/auth.service';
 import { SharedService } from './book/shared.service';
 import { BookService } from './book/book.service';
+import { TransService } from './trans/trans.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +58,10 @@ import { BookService } from './book/book.service';
     BookAddComponent,
     BookViewComponent,
     BookEditComponent,
+    TransactionComponent,
+    BorrowComponent,
+    ReturnComponent,
+    LoadDataComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +73,8 @@ import { BookService } from './book/book.service';
   providers: [
     AuthService,
     SharedService,
-    BookService
+    BookService,
+    TransService
   ],
   bootstrap: [AppComponent]
 })

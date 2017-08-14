@@ -11,11 +11,10 @@ const headers = new Headers({'Content-Type': 'application/json'});
 
 @Injectable()
 export class BookService{
-  
 
   constructor(private http: Http) {}
 
-  getBookById(id: string) {
+  fetchBookById(id: string) {
     return this.http.get(baseurl+'/api/book/'+id, { headers: headers })
         // transform the data we get back
         .map((response: Response) => response.json())
@@ -81,5 +80,15 @@ export class BookService{
         .catch((error: Response) => Observable.throw(error.json()));
     }
   }
+
+  fetchAllBooks() {
+    return this.http.get(baseurl+'/api/book/', { headers: headers})
+      // transform the data we get back
+      .map((response: Response) => response.json())
+      // catch error
+      .catch((error: Response) => Observable.throw(error.json())).toPromise();
+  }
+
+
 
 }

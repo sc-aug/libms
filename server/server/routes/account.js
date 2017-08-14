@@ -120,6 +120,28 @@ router.get('/:uname', function(req, res) {
 });
 
 /**
+ * get account by id
+ */
+router.get('/id/:id', function(req, res) {
+    Account.findOne({ _id: req.params.id }, function(err, acc) {
+        if (err) {
+            console.error('error: ', err);
+            return res.status(500).json({
+                title: 'An error occured [get account by id]',
+                error: err
+            });
+        }
+        if (! acc) {
+            return res.status(500).json({
+                title: 'No account found [get account by id]',
+                error: { message: 'Account could not be found [get account by id]'}
+            });
+        }
+        return res.status(200).json(acc);
+    });
+})
+
+/**
  * profile - update
  * only available to the person and admin
  * token required
@@ -130,7 +152,7 @@ router.post('/:uname', function(req, res) {
             console.error('error: ', err);
             // status 500 server side error
             return res.status(500).json({
-                title: 'An error occured',
+                title: 'An error occured [profile update]',
                 error: err
             });
         }
@@ -138,7 +160,7 @@ router.post('/:uname', function(req, res) {
         if (! acc) {
             return res.status(500).json({
                 title: 'No account found',
-                error: { message: 'Account could not be found'}
+                error: { message: 'Account could not be found [profile update]'}
             });
         }
         acc.email = req.body.email;

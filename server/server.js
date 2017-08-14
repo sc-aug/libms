@@ -10,6 +10,7 @@ const api = require('./server/routes/api');
 const account = require('./server/routes/account');
 const book = require('./server/routes/book');
 const search = require('./server/routes/search');
+const trans = require('./server/routes/trans');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
+app.use('/api/trans', trans);
 app.use('/api/account', account);
 app.use('/api/book', book);
 app.use('/api/search', search);

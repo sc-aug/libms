@@ -45,7 +45,7 @@ export class BookEditComponent {
 
   loadBook() {
     const id = JSON.parse(localStorage.getItem('cur_book'))._id;
-    this.bookService.getBookById(id)
+    this.bookService.fetchBookById(id)
       .subscribe(
         data => {
           this.book = data;
@@ -89,8 +89,8 @@ export class BookEditComponent {
     this.book.subjects = subjects;
     this.book.description = this.bookForm.value.description;
     // using service
-    this.bookService.updateBook(this.book).
-      subscribe(
+    this.bookService.updateBook(this.book)
+      .subscribe(
         data => {
           // console.log(data);
           // put current book in localStorage
@@ -110,9 +110,9 @@ export class BookEditComponent {
     this.bookService.deleteBook(this.book)
       .subscribe(
         result => {
-          console.log("[delete]:::", result);
+          console.log("[delete complete]", result);
           // this.loadBookForm(data);
-          console.log('deleted');
+          //console.log('deleted');
 
           this.router.navigate(['/book-opt', 'view']);
       });

@@ -41,7 +41,7 @@ export class BookViewComponent {
 
   loadBook() {
     const id = JSON.parse(localStorage.getItem('cur_book'))._id;
-    this.bookService.getBookById(id)
+    this.bookService.fetchBookById(id)
       .subscribe(
         data => {
           // console.log(data);

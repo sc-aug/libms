@@ -15,4 +15,12 @@ export class NavAccountComponent {
   isLoggedIn() {
     return this.authService.isLoggedIn();
   }
+
+  isAdmin() {
+    return localStorage.getItem('auth') == 'admin';
+  }
+
+  isLib() {
+    return localStorage.getItem('auth') == 'lib';
+  }
 }

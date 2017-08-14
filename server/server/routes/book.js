@@ -2,14 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Book = require('../models/book');
 
-// get all books - testing
-// router.get('/', function(req, res) {
-//     Book.find({}, function(err, books) {
-//         if (err) throw err;
-//         return res.json(books);
-//     });
-// });
-
 /** API
  * get book by id
  * auth: all
@@ -157,6 +149,16 @@ router.patch('/:id', function(req, res) {
                 obj: result
             });
         });
+    });
+});
+
+/**
+ * get all books - testing
+ */
+router.get('/', function(req, res) {
+    Book.find({}, function(err, books) {
+        if (err) throw err;
+        return res.json(books);
     });
 });
 
