@@ -1,0 +1,110 @@
+<div class="container">
+  <!-- for warning -->
+  <div class="alert alert-warning col-sm-8 col-sm-offset-2"
+   *ngIf="!bookSelected()">
+    <strong>Warning!</strong> No book selected
+  </div>
+  <!-- for data -->
+  <form class="form-horizontal"
+    [formGroup]="bookForm"
+    *ngIf="bookSelected()">
+
+    <div class="form-group">
+      <label for=""
+      class="col-sm-2 control-label">_id</label>
+      <div class="col-sm-8">
+        <input type="text" required=""
+        class="form-control" placeholder="_id"
+        formControlName="_id" readonly="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for=""
+      class="col-sm-2 control-label">Remain</label>
+      <div class="col-sm-3">
+        <input type="text" required=""
+        class="form-control" placeholder="Remain"
+        formControlName="remain" readonly="">
+      </div>
+      <label for=""
+      class="col-sm-2 control-label">Copy</label>
+      <div class="col-sm-3">
+        <input type="text" required=""
+        class="form-control" placeholder="Copy"
+        formControlName="copy" readonly="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputTitle"
+      class="col-sm-2 control-label">Title</label>
+      <div class="col-sm-8">
+        <input type="text" required=""
+        class="form-control" placeholder="Title"
+        formControlName="title" readonly="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputAuthor"
+      class="col-sm-2 control-label">Author</label>
+      <div class="col-sm-8">
+        <input type="text" required=""
+        class="form-control" placeholder="Author"
+        formControlName="author" readonly="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPublisher"
+      class="col-sm-2 control-label">Publisher</label>
+      <div class="col-sm-8">
+        <input type="text"
+        class="form-control" placeholder="Publisher"
+        formControlName="publisher" readonly="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputYear"
+      class="col-sm-2 control-label">Year</label>
+      <div class="col-sm-8">
+        <input type="number" min="0"
+        class="form-control" placeholder="Year"
+        formControlName="year" readonly="">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="inputLanguage"
+      class="col-sm-2 control-label">Language</label>
+      <div class="col-sm-8">
+        <input type="text"
+        class="form-control" placeholder="Language"
+        formControlName="lang" readonly="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputSubjects"
+      class="col-sm-2 control-label">Subjects</label>
+      <div class="col-sm-8">
+        <input type="text"
+        class="form-control" placeholder="Subjects. split by comma ','"
+        formControlName="subjects" readonly="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputDescription"
+      class="col-sm-2 control-label">Description</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" placeholder="Description"
+        formControlName="description" readonly=""></textarea>
+      </div>
+    </div>
+
+  </form>
+
+</div>

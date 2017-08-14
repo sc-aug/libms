@@ -1,0 +1,22 @@
+Library Management System
+
+Development Environment
+  - front-end: Angular 
+  - back-end: Express
+  - DB: MongoDB
+  - check `env` folder for more detail
+
+Basic Function
+  - Book
+    . search book
+    . view book detail
+    . edit book
+    . delete book
+  - Transaction
+    . borrow book
+    . return book
+  - Account
+    . signup
+    . signin
+    . logout
+    . check profile

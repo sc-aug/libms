@@ -1,0 +1,23 @@
+.config {
+    display: inline-block;
+    font-size: 12px;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.author {
+    font-style: italic;
+}
+
+.hideextra {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+.panel-body {
+    padding-left: 30px;
+    padding-right: 30px;
+}

@@ -1,0 +1,103 @@
+<div class="container">
+  <form class="form-horizontal"
+    [formGroup]="bookForm"
+    (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for=""
+      class="col-sm-2 control-label">Remain</label>
+      <div class="col-sm-3">
+        <input type="text" required=""
+        class="form-control" placeholder="Remain"
+        formControlName="remain">
+      </div>
+      <label for=""
+      class="col-sm-2 control-label">Copy</label>
+      <div class="col-sm-3">
+        <input type="text" required=""
+        class="form-control" placeholder="Copy"
+        formControlName="copy">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputTitle"
+      class="col-sm-2 control-label">Title</label>
+      <div class="col-sm-8">
+        <input type="text" required=""
+        class="form-control" placeholder="Title"
+        formControlName="title">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputAuthor"
+      class="col-sm-2 control-label">Author</label>
+      <div class="col-sm-8">
+        <input type="text" required=""
+        class="form-control" placeholder="Author"
+        formControlName="author">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPublisher"
+      class="col-sm-2 control-label">Publisher</label>
+      <div class="col-sm-8">
+        <input type="text"
+        class="form-control" placeholder="Publisher"
+        formControlName="publisher">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputYear"
+      class="col-sm-2 control-label">Year</label>
+      <div class="col-sm-8">
+        <input type="number" min="0"
+        class="form-control" placeholder="Year"
+        formControlName="year">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="inputLanguage"
+      class="col-sm-2 control-label">Language</label>
+      <div class="col-sm-8">
+        <input type="text"
+        class="form-control" placeholder="Language"
+        formControlName="language">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputSubjects"
+      class="col-sm-2 control-label">Subjects</label>
+      <div class="col-sm-8">
+        <input type="text"
+        class="form-control" placeholder="Subjects. split by comma ','"
+        formControlName="subjects">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputDiscription"
+      class="col-sm-2 control-label">Discription</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" placeholder="Discription"
+        formControlName="discription"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-8">
+        <button type="submit" class="btn btn-primary"
+        [disabled]="!bookForm.valid">Add Book</button>
+        <button type="submit" class="btn btn-default pull-right"
+        [routerLink]="['/home']">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>

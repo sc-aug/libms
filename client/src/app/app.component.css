@@ -1,0 +1,10 @@
+/*a {
+  color: #00B7FF;
+}*/
+
+.container {
+  min-height: 100%;
+  padding-left: auto;
+  padding-right: auto;
+  padding-top: 50px;
+}

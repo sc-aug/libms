@@ -1,0 +1,25 @@
+.row {
+    padding-top: 20px;
+}
+
+.hideextra div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+.title {
+    width: 230px;
+}
+
+.author, .pub {
+    width: 100px;
+}
+
+.remain {
+    width: 40px;
+}
+
+.year {
+    width: 37px;
+}

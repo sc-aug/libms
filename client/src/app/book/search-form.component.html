@@ -1,0 +1,14 @@
+<div class="row">
+  <form #f="ngForm"
+  (ngSubmit)="onSubmit(f.value)">
+    <div class="form-group">
+      <div class="col-sm-6 col-sm-offset-2">
+        <input type="text" placeholder="Book Title/Author/Keywords" class="form-control"
+        name="search" required=""  minlength="3" ngModel>
+      </div>
+      <div class="col-sm-2">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+</div>

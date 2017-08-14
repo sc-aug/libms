@@ -1,0 +1,24 @@
+MEAN Stack Development Environment
+
+Start containers in order
+1. angular container, link express container
+  - `Dockerfile` (prepare the requirements for angualr)
+  - `node-angular.sh`
+2. mongodb container
+  - `mongo-env.sh`
+  - data can be stored on host machine by specify VOLUME mapping
+3. express (back-end) container, and link mongodb container
+  - `node-express.sh`
+
+Example. my configuration (you can modify as you like):
+=============================================================
+          port 27017         port 9000           port 8000
+           _______           _________           _________
+          |       |  link   |         |         |         |
+          | Mongo |<--------| Express |         | Angular |
+          |_______|         |_________|         |_________|
+              |                   |      request      |
+              |                   |   <-----------    |
+localhost   27017               9000  <---------->  8000
+                                         response
+=============================================================

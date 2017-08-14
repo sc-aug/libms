@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  <div class="panel-body" (click)="onView()">
+    <div class="title hideextra"> {{ book.title }}</div>
+    <br>
+    <div class="author"> {{ book.author }}</div>
+    <br>
+    <label>Publish:</label>
+    {{ book.publisher }}. {{ book.year }}
+    <label>Remain:</label>
+    {{ book.remain }}/{{ book.copy }}
+  </div>
+  <div class="panel-footer" *ngIf="true">
+    <div class="config">
+      <a (click)="onView()">View</a>
+      <a (click)="onEdit()">Edit</a>
+      <a (click)="onEdit()">Delete</a>
+    </div>
+  </div>
+</div>

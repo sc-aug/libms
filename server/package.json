@@ -1,0 +1,17 @@
+{
+  "name": "backend-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js --port 9000 --host 0.0.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "~1.4.3",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.2",
+    "mongoose": "^4.11.6",
+    "mongoose-unique-validator": "^1.0.5"
+  }
+}
