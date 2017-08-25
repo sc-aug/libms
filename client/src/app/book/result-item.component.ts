@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Book } from './book.model';
 @Component({
   selector: 'app-result-item',
   templateUrl: './result-item.component.html',
   styleUrls: ['./result-item.component.css']
 })
 export class ResultItemComponent {
-  @Input() book: Object;
+  @Input() book: Book;
 
   constructor(private router: Router) {}
   
