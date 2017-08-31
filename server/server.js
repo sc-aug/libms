@@ -15,13 +15,23 @@ const trans = require('./server/routes/trans');
 const app = express();
 
 const DB = 'mylib';
-const uri = 'mongodb://mymongo:27017/'+DB;
+const uri = 'mongodb://mongo:27017/'+DB;
 const opt = { useMongoClient: true };
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri, opt, function(err) {
     if (err) console.error(err);
 });
+
+// CORS middleware
+const allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8000');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
+app.use(allowCrossDomain);
 
 // Parsers for POST data
 app.use(bodyParser.json());
