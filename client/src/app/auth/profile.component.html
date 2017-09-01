@@ -9,7 +9,7 @@
       <div class="col-sm-5">
         <input type="email" class="form-control" id="inputEmail3"
         placeholder="Email Address" required=""
-        [(ngModel)]="acc.email"
+        [(ngModel)]="cur_people.email"
         formControlName="email">
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div class="col-sm-5">
         <input type="text" class="form-control" id="inputUsername"
         placeholder="Username" required=""
-        [(ngModel)]="acc.uname"
+        [(ngModel)]="cur_people.uname"
         formControlName="uname">
       </div>
     </div>
@@ -29,12 +29,12 @@
       <label for="inputAuth"
       class="col-sm-2 col-sm-offset-2 control-label">Authentication</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputAuth" value="member"
-        [(ngModel)]="acc.auth"
-        formControlName="auth" disabled>
+        <input type="text" class="form-control" id="inputAuth"
+        [(ngModel)]="cur_people.auth"
+        formControlName="auth">
       </div>
     </div>
-    
+
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-5">
         <button type="submit" class="btn btn-primary"

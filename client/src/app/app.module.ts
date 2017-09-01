@@ -31,6 +31,12 @@ import { BorrowComponent } from './trans/borrow.component';
 import { ReturnComponent } from './trans/return.component';
 import { LoadDataComponent } from './trans/load-data.component';
 
+import { ManageComponent } from './manage/manage.component';
+import { AdminComponent } from './manage/admin.component';
+import { LibrarianComponent} from './manage/librarian.component';
+import { MemberComponent } from './manage/member.component';
+import { PeopleItemComponent } from './manage/people-item.component';
+
 import { appRouting } from './app.routing';
 
 import { AuthService } from './auth/auth.service';
@@ -61,7 +67,12 @@ import { TransService } from './trans/trans.service';
     TransactionComponent,
     BorrowComponent,
     ReturnComponent,
-    LoadDataComponent
+    LoadDataComponent,
+    ManageComponent,
+    AdminComponent,
+    LibrarianComponent,
+    MemberComponent,
+    PeopleItemComponent
   ],
   imports: [
     BrowserModule,

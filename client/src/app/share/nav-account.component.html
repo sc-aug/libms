@@ -6,27 +6,27 @@
 
   <!-- sign in -->
   <li class="dropdown" *ngIf="isLoggedIn()">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ status.uname }}({{ status.auth }})<span class="caret"></span></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+      role="button" aria-haspopup="true" aria-expanded="false">
+      {{ me.uname }}({{ me.auth }})<span class="caret"></span></a>
     <ul class="dropdown-menu">
-      <li><a [routerLink]="['/auth/logout']">Logout</a></li>
-      <li><a [routerLink]="['/profile']">Profile</a></li>
-      
+      <li><a [routerLink]="['/auth/logout']" (click)="logout()">Logout</a></li>
+      <li><a [routerLink]="['/profile']" (click)="updateCurPeople()">Profile</a></li>
+
       <li role="separator" class="divider"
         *ngIf="isLib() || isAdmin()"></li>
 
       <li><a [routerLink]="['/book-opt/add']"
-        *ngIf="isLib() || isAdmin()">Books</a></li>
+        *ngIf="isLib() || isAdmin()">Book</a></li>
       <li><a [routerLink]="['/trans/borrow']"
         *ngIf="isLib() || isAdmin()">Borrow</a></li>
       <li><a [routerLink]="['/trans/return']"
         *ngIf="isLib() || isAdmin()">Return</a></li>
-      
+
       <li role="separator" class="divider"
         *ngIf="isLib() || isAdmin()"></li>
-      
-      <li><a *ngIf="isAdmin()">Librarian</a></li>
-
-      <li><a *ngIf="isLib() || isAdmin()">Member</a></li>
+      <li><a  [routerLink]="['/manage']"
+        *ngIf="isLib() || isAdmin()">Manage</a></li>
     </ul>
   </li>
 

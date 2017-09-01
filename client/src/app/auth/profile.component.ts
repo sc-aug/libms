@@ -10,48 +10,43 @@ import { Account } from './account.model';
   templateUrl: 'profile.component.html',
   styleUrls: ['profile.component.css']
 })
-export class ProfileComponent {
-  
+export class ProfileComponent implements OnInit {
+
   profileForm: FormGroup;
-  uname: string;
-  acc: Account;
+  me: Account;
+  cur_people: Account;
 
   constructor(private authService: AuthService, private router: Router) {
-    if (localStorage.getItem('token')) {
-      this.uname = localStorage.getItem('uname');
-      this.acc = new Account(
-        localStorage.getItem('email'),
-        "",
-        localStorage.getItem('uname'),
-        localStorage.getItem('auth')
-      );
+
+    this.me = JSON.parse(localStorage.getItem('me'));
+    this.cur_people = JSON.parse(localStorage.getItem('cur_people'));
+
+    if (this.validAuth(this.me, this.cur_people)) {
+      //this.cur_people = JSON.parse(localStorage.getItem('cur_people'));
     } else { // if you don't have token, you cannot access this page
       this.router.navigateByUrl('/');
     }
   }
 
-  onSubmit() {
-    console.log(this.profileForm.value);
-    // create a new account
-    const newAcc = new Account(
-      this.profileForm.value.email,
-      "",
-      this.profileForm.value.uname,
-      "");
-    // using service
-    this.authService.updateAccount(this.uname, newAcc).
-      subscribe(
-        data => console.log(data),
-        err => console.log(err)
-      );
-    this.router.navigateByUrl('/');
+  validAuth(me, cur) {
+    if ( !me ) {
+      return false;
+    } else if (me.auth == 'admin') {
+      return true;
+    } else if (me.auth == 'member' && cur.auth == 'lib') {
+      return true;
+    } else if (me.auth == cur.auth && me._id == cur._id) {
+      return true;
+    } else {
+      return false;
+    }
   }
-  
+
   ngOnInit() {
     this.profileForm = new FormGroup({
-      uname: new FormControl("", Validators.required),
-      auth: new FormControl("", Validators.required),
-      email: new FormControl("", [
+      uname: new FormControl({ value: this.cur_people.uname }, Validators.required),
+      auth: new FormControl({ value: this.cur_people.auth, disabled: true }, Validators.required),
+      email: new FormControl({ value: this.cur_people.email }, [
         Validators.required,
         Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")
         ])

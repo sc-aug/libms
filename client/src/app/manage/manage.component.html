@@ -1,0 +1,20 @@
+<header>
+  <nav class="row spacing">
+
+  </nav>
+</header>
+
+<header class="row spacing">
+  <nav class="col-sm-8 col-sm-offset-2">
+    <ul class="nav nav-tabs">
+      <li routerLinkActive="active"><a [routerLink]="['admin']">admin</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['librarian']">librarian</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['member']">member</a></li>
+      <!-- <li routerLinkActive="active"><a [routerLink]="['logout']">Logout</a></li> -->
+    </ul>
+  </nav>
+</header>
+
+<div class="row spacing">
+  <router-outlet></router-outlet>
+<div class="row spacing">

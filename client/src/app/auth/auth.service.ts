@@ -54,12 +54,20 @@ export class AuthService{
       .catch((error: Response) => Observable.throw(error.json())).toPromise();
   }
 
-  logout() {
-    localStorage.clear();
+  fetchAllLibrarians() {
+    return this.http.get(baseurl+'/api/account/auth/'+'lib', { headers: headers })
+      .map((response: Response) => response.json())
+      .catch((error: Response) => Observable.throw(error.json())).toPromise();
   }
 
-  isLoggedIn() {
-    return localStorage.getItem('token') != null;
+  fetchAllAdmins() {
+    return this.http.get(baseurl+'/api/account/auth/'+'admin', { headers: headers })
+      .map((response: Response) => response.json())
+      .catch((error: Response) => Observable.throw(error.json())).toPromise();
+  }
+
+  logout() {
+    localStorage.clear();
   }
 
 }

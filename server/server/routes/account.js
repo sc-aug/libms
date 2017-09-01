@@ -68,11 +68,13 @@ router.post('/signin', function(req, res, next) {
         var token = jwt.sign({ acc: acc }, 'my-secret-key', { expiresIn: 7200 });
         res.status(200).json({
             message: 'Successfully logged in',
-            token: token,
-            _id: acc._id,
-            uname: acc.uname,
-            auth: acc.auth,
-            email: acc.email
+            account: {
+              token: token,
+              _id: acc._id,
+              uname: acc.uname,
+              auth: acc.auth,
+              email: acc.email
+            }
         });
     })
 });
@@ -186,7 +188,7 @@ router.post('/:uname', function(req, res) {
 
 /**
  * all account
- * only available to admin
+ * only available to admin & librarian
  * token required
  */
 router.get('/auth/:auth', function(req, res) {
@@ -206,7 +208,7 @@ router.get('/auth/:auth', function(req, res) {
                 error: { message: 'No account found'}
             });
         }
-        
+
         res.status(200).json(accs);
     });
 });

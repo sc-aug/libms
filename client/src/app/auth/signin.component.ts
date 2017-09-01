@@ -17,23 +17,26 @@ export class SigninComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    console.log(this.signinForm.value);
+    // console.log(this.signinForm.value);
     const acc = new Account("", this.signinForm.value.email, this.signinForm.value.passwd);
+    // Signin
     this.authService.signin(acc)
       .subscribe(
         data => {
           // storage in browser, javascript object
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('_id', data._id);
-          localStorage.setItem('uname', data.uname);
-          localStorage.setItem('email', data.email);
-          localStorage.setItem('auth', data.auth);
+          // localStorage.setItem('token', data.token);
+          // localStorage.setItem('_id', data._id);
+          // localStorage.setItem('uname', data.uname);
+          // localStorage.setItem('email', data.email);
+          // localStorage.setItem('auth', data.auth);
+          localStorage.setItem('me', JSON.stringify(data.account));
+          //localStorage.setItem('cur_people', JSON.stringify(data.account));
           // this.router.navigate(['/']);
           this.router.navigateByUrl('/');
         },
         err => console.error(err)
       );
-    
+
     this.signinForm.reset();
   }
 

@@ -1,26 +1,44 @@
-import { Component } from '@angular/core';
-
-import { AuthService } from '../auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-nav-account',
   templateUrl: './nav-account.component.html',
   styleUrls: ['./nav-account.component.css',]
 })
-export class NavAccountComponent {
-  public status = localStorage;
+export class NavAccountComponent implements OnInit{
+  me: any;
 
-  constructor(private authService: AuthService) {}
-  
+  constructor() {
+  }
+
+  fetchData() {
+    this.me = JSON.parse(localStorage.getItem('me'));
+  }
+
   isLoggedIn() {
-    return this.authService.isLoggedIn();
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp != null && tmp.token != null && this.me != null;
   }
 
   isAdmin() {
-    return localStorage.getItem('auth') == 'admin';
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp != null && tmp.auth == 'admin';
   }
 
   isLib() {
-    return localStorage.getItem('auth') == 'lib';
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp != null && tmp.auth == 'lib';
+  }
+
+  updateCurPeople() {
+    localStorage.setItem('cur_people', JSON.stringify(this.me));
+  }
+
+  logout() {
+    this.me = null;
+  }
+
+  ngOnInit() {
+      this.fetchData();
   }
 }
