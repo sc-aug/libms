@@ -28,7 +28,7 @@ router.get('/id/:id', function(req, res) {
     });
 });
 
-router.get('/key/:keywords', function(req, res) {
+router.get('/kw/:keywords', function(req, res) {
     var kw = req.params.keywords
     console.log("search book. keywords:", kw);
     Book.find({$or:[
