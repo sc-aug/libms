@@ -13,7 +13,7 @@ export class PeopleItemComponent {
 
   constructor(private router: Router) {}
 
-  selectPeople() {
+  checkProfile() {
     localStorage.cur_people = JSON.stringify(this.p);
     this.router.navigate(['/profile']);
   }

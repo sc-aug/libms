@@ -18,8 +18,13 @@ export class NavAccountComponent {
     this.sharedService.currentAcc$
       .subscribe(
         data => {
-          this.tag = data.uname+'('+data.auth+')';
-          this.loggedIn = true;
+          if (data == null) {
+            this.loggedIn = false;
+            this.tag = "no account";
+          } else {
+            this.tag = data.uname+'('+data.auth+')';
+            this.loggedIn = true;
+          }
         }
       );
   }

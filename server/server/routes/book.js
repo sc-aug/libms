@@ -1,32 +1,29 @@
 var express = require('express');
 var router = express.Router();
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+
 var Book = require('../models/book');
 
-/** API
- * get book by id
- * auth: all
+const secret = 'my-secret-key';
+
+/**
+ * check token validation
+ * protect apis
  */
-router.get('/:id', function(req, res) {
-    Book.findOne({ _id: req.params.id }, function(err, book) {
-        if (err) {
-            console.error('error: ', err);
-            // status 500 server side error
-            return res.status(500).json({
-                title: 'An error occured',
-                error: err
-            });
-        }
-        // check exististance of account
-        if (! book) {
-            return res.status(500).json({
-                title: 'No book found',
-                error: { message: 'No book found'}
-            });
-        }
-        //console.log(book);
-        res.status(200).json(book);
-    });
-});
+// router.use('/', function(req, res, next) { // this will be reach at each requst
+//     console.log("checking ... 'api/book/'");
+//     console.log("server get token", req.query.token);
+//     jwt.verify(req.query.token, secret, function(err, decoded) {
+//         if (err) {
+//             return res.status(401).json({
+//                 title: 'Not Authenticated',
+//                 error: err
+//             });
+//         }
+//         next(); // make sure request reaches code blow
+//     })
+// });
 
 /** API
  * add a book

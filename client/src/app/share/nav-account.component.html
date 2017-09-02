@@ -11,20 +11,22 @@
       {{ tag }}<span class="caret"></span></a>
     <ul class="dropdown-menu">
       <li><a [routerLink]="['/auth/logout']" (click)="logout()">Logout</a></li>
-      <li><a [routerLink]="['/profile']" (click)="updateCurPeople()">Profile</a></li>
+      <li><a [routerLink]="['/profile']" (click)="updateCurPeople()">My Profile</a></li>
 
       <li role="separator" class="divider"
         *ngIf="authBookOpt() || authBookTrans()"></li>
 
       <li><a [routerLink]="['/book-opt/add']"
-        *ngIf="authBookOpt()">Book Opt</a></li>
+        *ngIf="authBookOpt()">Book Operation</a></li>
       <li><a [routerLink]="['/trans']"
-        *ngIf="authBookTrans()">Book Trans</a></li>
+        *ngIf="authBookTrans()">Book Transaction</a></li>
 
       <li role="separator" class="divider"
         *ngIf="authManage()"></li>
       <li><a  [routerLink]="['/manage']"
-        *ngIf="authManage()">People</a></li>
+        *ngIf="authManage()">People Management</a></li>
+      <li><a  [routerLink]="['/auth/signup']"
+        *ngIf="authManage()">New Account</a></li>
     </ul>
   </li>
 

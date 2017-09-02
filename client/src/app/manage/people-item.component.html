@@ -1,5 +1,14 @@
-<div class="panel panel-default"
-  (click)=selectPeople()>
-  <div>{{ p.email}}</div>
-  <div>{{ p.passwd}}</div>
+<div class="panel panel-default">
+  <div class="panel-body" (click)="checkProfile()">
+      <label> [ Email:</label> {{ p.email }}
+      <label> [ Name:</label> {{ p.uname }}
+      <label> [ Auth:</label> {{ p.auth }}
+  </div>
+  <div class="panel-footer" *ngIf="false">
+    <div class="config">
+      <!-- <a (click)="onView()">View</a>
+      <a (click)="onEdit()">Edit</a>
+      <a (click)="onEdit()">Delete</a> -->
+    </div>
+  </div>
 </div>

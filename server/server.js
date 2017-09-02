@@ -8,6 +8,7 @@ const mongoose = require('mongoose'); // [SC] mongodb
 // Get our API routes
 const api = require('./server/routes/api');
 const account = require('./server/routes/account');
+const sign = require('./server/routes/sign');
 const book = require('./server/routes/book');
 const search = require('./server/routes/search');
 const trans = require('./server/routes/trans');
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our api routes
 app.use('/api/trans', trans);
 app.use('/api/account', account);
+app.use('/api/sign', sign);
 app.use('/api/book', book);
 app.use('/api/search', search);
 app.use('/api', api);
