@@ -28,13 +28,13 @@ router.get('/id/:id', function(req, res) {
     });
 });
 
-router.get('/kw/:keywords', function(req, res) {
+router.get('/key/:keywords', function(req, res) {
     var kw = req.params.keywords
     console.log("search book. keywords:", kw);
-    Book.find({ title: {
-        $regex: kw,
-        $options: 'i' }
-    }, function(err, b1) {
+    Book.find({$or:[
+        {'title': {$regex: kw, $options: 'i'}},
+        {'auth': {$regex: kw, $options: 'i'}},
+    ]}, function(err, books) {
         if (err) {
             console.error('error: ', err);
             // status 500 server side error
@@ -43,23 +43,10 @@ router.get('/kw/:keywords', function(req, res) {
                 error: err
             });
         }
-
-        Book.find({ author: {
-            $regex: kw,
-            $options: 'i' }
-        }, function(err, b2) {
-            if (err) {
-                console.error('error: ', err);
-                // status 500 server side error
-                return res.status(500).json({
-                    title: 'An error occured [search book]',
-                    error: err
-                });
-            }
-            // might have duplicate result
-            res.status(200).json(b1.concat(b2));
-        });
+        //console.log("result", books);
+        res.status(200).json(books);
     });
+
 });
 
 module.exports = router;
