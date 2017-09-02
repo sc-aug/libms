@@ -33,9 +33,9 @@ export class BookEditComponent {
 
   initForm() {
     this.bookForm = new FormGroup({
-      _id: new FormControl(""),
-      remain: new FormControl("", Validators.required),
-      copy: new FormControl("", Validators.required),
+      _id: new FormControl({ value: "", disabled: true}),
+      remain: new FormControl({ value: "", disabled: true}, Validators.required),
+      copy: new FormControl({ value: "", disabled: true}, Validators.required),
       title: new FormControl("", Validators.required),
       author: new FormControl("", Validators.required),
       publisher: new FormControl("", Validators.required),
