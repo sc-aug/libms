@@ -19,7 +19,6 @@ import { ResultItemComponent } from './book/result-item.component';
 import { SigninComponent } from './auth/signin.component';
 import { SignupComponent } from './auth/signup.component';
 import { LogoutComponent } from './auth/logout.component';
-import { ProfileComponent } from './auth/profile.component';
 
 import { BookOptComponent } from './book/book-opt.component';
 import { BookAddComponent } from './book/book-add.component';
@@ -37,12 +36,16 @@ import { LibrarianComponent} from './manage/librarian.component';
 import { MemberComponent } from './manage/member.component';
 import { PeopleItemComponent } from './manage/people-item.component';
 
+import { ProfileComponent } from './profile/profile.component';
+import { AccInfoComponent } from './profile/acc-info.component';
+
 import { appRouting } from './app.routing';
 
 import { AuthService } from './auth/auth.service';
 import { SharedService } from './book/shared.service';
 import { BookService } from './book/book.service';
 import { TransService } from './trans/trans.service';
+import { ProfileService } from './profile/profile.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,6 @@ import { TransService } from './trans/trans.service';
     SignupComponent,
     LogoutComponent,
     NavAccountComponent,
-    ProfileComponent,
     BookOptComponent,
     BookAddComponent,
     BookViewComponent,
@@ -72,7 +74,9 @@ import { TransService } from './trans/trans.service';
     AdminComponent,
     LibrarianComponent,
     MemberComponent,
-    PeopleItemComponent
+    PeopleItemComponent,
+    ProfileComponent,
+    AccInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +89,8 @@ import { TransService } from './trans/trans.service';
     AuthService,
     SharedService,
     BookService,
-    TransService
+    TransService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

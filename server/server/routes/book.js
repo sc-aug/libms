@@ -23,7 +23,7 @@ router.get('/:id', function(req, res) {
                 error: { message: 'No book found'}
             });
         }
-        console.log(book);
+        //console.log(book);
         res.status(200).json(book);
     });
 });
@@ -45,7 +45,7 @@ router.post('/', function(req, res) {
         subjects: req.body.subjects,
         description: req.body.description
     });
-    
+
     // console.log(book);
     book.save(function(err, result) {
         if (err) {
@@ -88,7 +88,7 @@ router.delete('/:id', function(req, res) {
         }
         console.log("book fetched before delete! ", book);
 
-        
+
     }).remove().exec(function(err, result) {
             if (err) {
                 return res.status(500).json({
@@ -108,7 +108,7 @@ router.delete('/:id', function(req, res) {
  * auth: lib & admin
  */
 router.patch('/:id', function(req, res) {
-    console.log("get data during updating: ", req.body);
+    console.log("edit book. data: ", req.body);
 
     Book.findById(req.params.id, function(err, book) {
         if (err) {

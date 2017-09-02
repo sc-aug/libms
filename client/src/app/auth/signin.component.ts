@@ -23,15 +23,7 @@ export class SigninComponent implements OnInit {
     this.authService.signin(acc)
       .subscribe(
         data => {
-          // storage in browser, javascript object
-          // localStorage.setItem('token', data.token);
-          // localStorage.setItem('_id', data._id);
-          // localStorage.setItem('uname', data.uname);
-          // localStorage.setItem('email', data.email);
-          // localStorage.setItem('auth', data.auth);
           localStorage.setItem('me', JSON.stringify(data.account));
-          //localStorage.setItem('cur_people', JSON.stringify(data.account));
-          // this.router.navigate(['/']);
           this.router.navigateByUrl('/');
         },
         err => console.error(err)

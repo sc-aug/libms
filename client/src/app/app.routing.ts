@@ -3,7 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from './home.component';
 import { AuthenticationComponent } from './auth/authentication.component';
 import { SearchComponent } from './book/search.component';
-import { ProfileComponent } from './auth/profile.component';
+import { ProfileComponent } from './profile/profile.component';
 import { BookOptComponent } from './book/book-opt.component';
 import { TransactionComponent } from './trans/transaction.component';
 import { ManageComponent } from './manage/manage.component';

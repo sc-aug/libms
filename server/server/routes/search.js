@@ -4,7 +4,7 @@ var Book = require('../models/book');
 
 router.get('/:keywords', function(req, res) {
     var kw = req.params.keywords
-    console.log(kw);
+    console.log("search book. keywords:", kw);
     Book.find({ title: {
         $regex: kw,
         $options: 'i' }
