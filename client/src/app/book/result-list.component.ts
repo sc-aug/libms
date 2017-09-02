@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Book } from './book.model'
-import { SharedService } from './shared.service';
+import { SharedService } from '../share/shared.service';
 
 @Component({
   selector: 'app-result-list',

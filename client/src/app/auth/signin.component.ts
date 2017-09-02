@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
+import { SharedService } from '../share/shared.service';
 import { Account } from './account.model';
 
 @Component({
@@ -14,7 +15,10 @@ export class SigninComponent implements OnInit {
   signinForm: FormGroup;
 
   // inject service
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private sharedService: SharedService,
+    private router: Router) {}
 
   onSubmit() {
     // console.log(this.signinForm.value);
@@ -24,6 +28,7 @@ export class SigninComponent implements OnInit {
       .subscribe(
         data => {
           localStorage.setItem('me', JSON.stringify(data.account));
+          this.sharedService.publishCurrentAcc(data.account);
           this.router.navigateByUrl('/');
         },
         err => console.error(err)

@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import 'rxjs/Rx';
-
-import { Account } from '../auth/account.model';
-import { Book } from '../book/book.model';
 
 import { AuthService } from '../auth/auth.service';
 import { BookService } from '../book/book.service';
@@ -15,5 +10,23 @@ import { BookService } from '../book/book.service';
   styles: [`.row { padding-top: 40px; }`]
 })
 export class TransactionComponent {
+  constructor(private router: Router) {
+    this.isAuthorized();
+  }
 
+  isAuthorized() {
+    if (!this.isLib() && !this.isAdmin()) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
+  isAdmin() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'admin';
+  }
+
+  isLib() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'lib';
+  }
 }

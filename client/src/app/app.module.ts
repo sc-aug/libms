@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavTopComponent } from './share/nav-top.component';
 import { NavAccountComponent } from './share/nav-account.component';
+import { AboutComponent } from './share/about.component';
 import { FooterComponent } from './share/footer.component';
 import { HomeComponent } from './home.component';
 import { AuthenticationComponent } from './auth/authentication.component';
@@ -42,7 +43,7 @@ import { AccInfoComponent } from './profile/acc-info.component';
 import { appRouting } from './app.routing';
 
 import { AuthService } from './auth/auth.service';
-import { SharedService } from './book/shared.service';
+import { SharedService } from './share/shared.service';
 import { BookService } from './book/book.service';
 import { TransService } from './trans/trans.service';
 import { ProfileService } from './profile/profile.service';
@@ -53,6 +54,7 @@ import { ProfileService } from './profile/profile.service';
     NavTopComponent,
     FooterComponent,
     HomeComponent,
+    AboutComponent,
     SearchFormComponent,
     SearchComponent,
     ResultListComponent,

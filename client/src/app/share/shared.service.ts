@@ -26,4 +26,24 @@ export class SharedService {
     this.currentBook.next(data);
   }
 
+  /*
+   * Observable
+   * current loggin account
+   */
+  private currentAcc = new Subject<any>();
+  currentAcc$ = this.currentAcc.asObservable();
+  publishCurrentAcc(data: any) {
+    this.currentAcc.next(data);
+  }
+
+  /*
+   * Observable
+   * current loggin account
+   */
+  // private currentProfile = new Subject<any>();
+  // currentProfile$ = this.currentProfile.asObservable();
+  // publishCurrentProfile(data: any) {
+  //   this.currentProfile.next(data);
+  // }
+
 }

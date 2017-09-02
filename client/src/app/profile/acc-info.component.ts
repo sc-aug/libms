@@ -14,9 +14,6 @@ export class AccInfoComponent implements OnInit {
   @Input() cur_people: Account;
   @Input() borrow_list: any[];
   profileForm: FormGroup;
-  // me: Account;
-  // cur_people: Account;
-  // borrowlist: any;
 
   constructor(private profileService: ProfileService, private router: Router) {
   }

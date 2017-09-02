@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BookService } from './book.service';
-import { SharedService } from './shared.service';
+import { SharedService } from '../share/shared.service';
 
 @Component({
   selector: 'app-search-form',
@@ -26,7 +26,7 @@ export class SearchFormComponent {
       this.bookService.searchBook(data.search.trim()).
         subscribe(
           data => {
-            console.log(data);
+            //console.log(data);
             this.sharedService.publishSearchResult(data);
           },
           err => console.log(err));

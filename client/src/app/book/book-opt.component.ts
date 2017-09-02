@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 export class BookOptComponent {
 
   isAuthorized() {
-    return localStorage.getItem('auth') == 'admin'
-        || localStorage.getItem('auth') == 'lib';
+    const tmp = JSON.parse(localStorage.getItem('me')).auth;
+    return tmp == 'admin'|| tmp == 'lib';
   }
 
   bookSelected() {

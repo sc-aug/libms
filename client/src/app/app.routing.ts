@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from './home.component';
 import { AuthenticationComponent } from './auth/authentication.component';
 import { SearchComponent } from './book/search.component';
+import { AboutComponent } from './share/about.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BookOptComponent } from './book/book-opt.component';
 import { TransactionComponent } from './trans/transaction.component';
@@ -18,6 +19,7 @@ const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'auth', component: AuthenticationComponent, children: AUTH_ROUTES },
   { path: 'profile', component: ProfileComponent },
   { path: 'book-opt', component: BookOptComponent, children: BOOK_ROUTES },

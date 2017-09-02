@@ -32,7 +32,7 @@ export class ProfileComponent {
 
   authValidation() {
     // check validation
-    if (this.checkAuth(this.me, this.cur_people)) {
+    if (this.cur_people != null && this.checkAuth(this.me, this.cur_people)) {
       //this.cur_people = JSON.parse(localStorage.getItem('cur_people'));
     } else { // if you don't have token, you cannot access this page
       this.router.navigateByUrl('/');

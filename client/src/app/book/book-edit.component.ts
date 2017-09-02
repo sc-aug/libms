@@ -18,13 +18,16 @@ export class BookEditComponent {
   constructor(
     private bookService: BookService,
     private router: Router) {
+    // only visible for admin & lib
+    this.isAuthorized();
 
     if (this.bookSelected()) {
       this.initForm();
       this.loadBook();
-    } else {
-      this.router.navigate(['/book-opt', 'view']);
     }
+    // else {
+    //   this.router.navigate(['/book-opt', 'view']);
+    // }
 
   }
 
@@ -116,6 +119,22 @@ export class BookEditComponent {
 
           this.router.navigate(['/book-opt', 'view']);
       });
+  }
+
+  isAuthorized() {
+    if (!this.isLib() && !this.isAdmin()) {
+      this.router.navigate(['/book-opt', 'view']);
+    }
+  }
+
+  isAdmin() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'admin';
+  }
+
+  isLib() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'lib';
   }
 
 }
