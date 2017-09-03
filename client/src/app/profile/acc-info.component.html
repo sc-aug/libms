@@ -69,21 +69,26 @@
     </div>
 
     <div class="col-sm-8 col-sm-offset-2 table-responsive">
-      <table class="table table-striped">
+      <table class="table">
         <thead>
           <!-- <th>ID.</th> -->
           <th>Title.</th>
           <th>Author.</th>
+          <th *ngIf="authReturn()" width="100px">operation</th>
         </thead>
         <tbody>
           <tr *ngFor="let b of borrow_list">
             <!-- <td>{{ b._id }}</td> -->
-            <td>{{ b.title }}</td>
-            <td>{{ b.author }}</td>
+            <td class="txt">{{ b.title }}</td>
+            <td class="txt">{{ b.author }}</td>
+            <td *ngIf="authReturn()" width="100px">
+              <button type="button" class="btn btn-default pull-right"
+              (click)="onReturn()">return</button></td>
           </tr>
         </tbody>
       </table>
 
+      <hr/>
     </div>
   </div>
 

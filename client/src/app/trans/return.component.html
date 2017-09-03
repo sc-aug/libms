@@ -15,7 +15,7 @@
     <div class="col-sm-6 col-sm-offset-3  form-group">
       <div class="col-sm-2"><label>Book</label></div>
       <div class="col-sm-6 col-sm-offset-2">
-        
+
         <select data-live-search="true" class="form-control"
           formControlName="book_id">
           <option *ngFor="let b of books" value="{{b._id}}">{{b.title}}</option>
@@ -26,7 +26,7 @@
 
     <div class="form-group">
       <div class="col-sm-7 col-sm-offset-5">
-        <button type="submit" class="btn btn-primary">Return</button>
+        <button type="submit" class="btn btn-danger">Return</button>
         <!-- <app-load-data
         (members)="loadMembers($event)"
         (books)="loadBooks($event)"></app-load-data> -->

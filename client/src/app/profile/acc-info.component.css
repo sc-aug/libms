@@ -1,6 +1,14 @@
+th {
+  padding: 0px 0px 10px 10px;
+}
+
 button {
     width: 100px;
     margin: 0px 5px 0px 5px;
+}
+
+.txt {
+    padding: 15px 0px 0px 10px;
 }
 
 .container { margin-top: 50px; }

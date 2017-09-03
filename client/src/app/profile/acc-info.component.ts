@@ -138,4 +138,22 @@ export class AccInfoComponent implements OnInit {
     });
   }
 
+  authReturn() {
+    return this.isLib() || this.isAdmin();
+  }
+
+  isLib (){
+    const tmp_me = JSON.parse(localStorage.getItem('me'));
+    return tmp_me.auth == 'lib';
+  }
+
+  isAdmin (){
+    const tmp_me = JSON.parse(localStorage.getItem('me'));
+    return tmp_me.auth == 'admin';
+  }
+
+  onReturn() {
+    this.router.navigate(['/trans', 'return']);
+  }
+
 }
