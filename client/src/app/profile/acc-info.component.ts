@@ -41,6 +41,7 @@ export class AccInfoComponent implements OnInit {
         data => {
           console.log(data);
           // put current book in localStorage
+          console.log(data.obj);
           this.updateLocalStorage(data.obj);
           this.router.navigateByUrl('/profile');
         },
@@ -93,6 +94,8 @@ export class AccInfoComponent implements OnInit {
     tmp_me.uname = acc.uname;
     tmp_me.email = acc.email;
 
+    localStorage.setItem('me',  JSON.stringify(tmp_me));
+
     this.sharedService.publishCurrentAcc(acc);
   }
 
@@ -100,6 +103,8 @@ export class AccInfoComponent implements OnInit {
     const tmp_cur = JSON.parse(localStorage.getItem('cur_people'));
     tmp_cur.uname = acc.uname;
     tmp_cur.email = acc.email;
+
+    localStorage.setItem('cur_people', JSON.stringify(tmp_cur));
   }
 
   ngOnInit() {
