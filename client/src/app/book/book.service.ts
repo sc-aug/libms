@@ -15,22 +15,22 @@ export class BookService{
   constructor(private http: Http) {}
 
   addBook(book: Book) {
-    const auth = localStorage.getItem('auth');
+    const auth = JSON.parse(localStorage.getItem('me')).auth;
     const body = JSON.stringify(book);
     // backend server will check auth in encrypted token
-    // if (auth && (auth == 'lib' || auth == 'admin')){
+    if (auth && (auth == 'lib' || auth == 'admin')){
       return this.http.post(baseurl+'/api/book/', body, { headers: headers })
         // transform the data we get back
         .map((response: Response) => response.json())
         // catch error
         .catch((error: Response) => Observable.throw(error.json()));
-    // } else {
-    //   console.error('not authorized operation');
-    // }
+    } else {
+      console.error('not authorized operation');
+    }
   }
 
   updateBook(book: Book) {
-    const auth = localStorage.getItem('auth');
+    const auth = JSON.parse(localStorage.getItem('me')).auth;
     const body = JSON.stringify(book);
     // backend server will check auth in encrypted token
     if (auth && (auth == 'lib' || auth == 'admin')){
@@ -45,11 +45,11 @@ export class BookService{
   }
 
   deleteBook(book: Book) {
-    const auth = localStorage.getItem('auth');
-    console.log("bookID: ", book._id);
-    // const body = JSON.stringify(book);
+    const auth = JSON.parse(localStorage.getItem('me')).auth;
+    //console.log("bookID: ", book._id);
+    const body = JSON.stringify(book);
     // backend server will check auth in encrypted token
-    // if (auth && (auth == 'lib' || auth == 'admin')){
+    if (auth && (auth == 'lib' || auth == 'admin')){
       return this.http.delete(baseurl+'/api/book/'+book._id, { headers: headers })
         // transform the data we get back
         .map((response: Response) => response.json())
@@ -57,9 +57,9 @@ export class BookService{
         .catch((error: Response) => {
           return Observable.throw(error.json());
         });
-    // } else {
-    //   console.error('not authorized operation');
-    // }
+    } else {
+      console.error('not authorized operation');
+    }
   }
 
   searchBook(keywords: string) {

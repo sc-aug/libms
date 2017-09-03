@@ -34,8 +34,8 @@ export class BookEditComponent {
   initForm() {
     this.bookForm = new FormGroup({
       _id: new FormControl({ value: "", disabled: true}),
-      remain: new FormControl({ value: "", disabled: true}, Validators.required),
-      copy: new FormControl({ value: "", disabled: true}, Validators.required),
+      remain: new FormControl({ value: ""}, Validators.required),
+      copy: new FormControl({ value: ""}, Validators.required),
       title: new FormControl("", Validators.required),
       author: new FormControl("", Validators.required),
       publisher: new FormControl("", Validators.required),
@@ -107,16 +107,15 @@ export class BookEditComponent {
   }
 
   onDelete() {
-    localStorage.removeItem('cur_book');
     // const id = JSON.parse(localStorage.getItem('cur_book'))._id;
-    console.log(this.book);
+    //console.log(this.book);
     this.bookService.deleteBook(this.book)
       .subscribe(
         result => {
           console.log("[delete complete]", result);
           // this.loadBookForm(data);
           //console.log('deleted');
-
+          localStorage.removeItem('cur_book');
           this.router.navigate(['/book-opt', 'view']);
       });
   }

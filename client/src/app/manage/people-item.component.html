@@ -1,8 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-body" (click)="checkProfile()">
-      <label> [ Email:</label> {{ p.email }}
-      <label> [ Name:</label> {{ p.uname }}
-      <label> [ Auth:</label> {{ p.auth }}
+    <label> [ Email:</label> {{ p.email }}
+    <label> [ Name:</label> {{ p.uname }}
+    <label> [ Auth:</label> {{ p.auth }}
+    <div class="btn btn-default pull-right"
+      *ngIf="checkBorrow()">borrowed [{{ getBookNumber() }}] books</div>
   </div>
   <div class="panel-footer" *ngIf="false">
     <div class="config">
