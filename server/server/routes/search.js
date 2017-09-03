@@ -2,6 +2,13 @@ var express = require('express');
 var router = express.Router();
 var Book = require('../models/book');
 
+/******************************
+ * API for search book
+ *   - search by id
+ *   - search by keywords
+ *
+ ******************************/
+
 /** API
  * get book by id
  * auth: all

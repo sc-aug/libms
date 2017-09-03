@@ -6,6 +6,14 @@ var jwt = require('jsonwebtoken');
 var Account = require('../models/account');
 var Book = require('../models/book');
 
+/******************************
+ * API for book transactions
+ *   - list borrowed book by account id
+ *   - borrow book by account id and book id
+ *   - return book by account id and book id
+ *
+ ******************************/
+
 /** API
  * borrow list
  * auth: lib & admin
@@ -14,25 +22,24 @@ router.get('/list/:m_id', function(req, res) {
     var m_id = req.params.m_id;
     console.log("search borrow list: ", m_id);
     Account.findById(m_id)
-        .populate('books', {
-            'title': 'title',
-            'author': 'author'
-        })
-        .exec(function(err, member) {
-            if (err) {
-                console.error('error: ', err);
-                // status 500 server side error
-                return res.status(500).json({
-                    title: 'An error occured [search borrow list]',
-                    error: err
-                });
-            }
-            //console.log(member_book);
-            res.status(200).json({
-                message: 'search borrow list. success.',
-                obj: member.books
+    .populate('books', {
+        'title': 'title',
+        'author': 'author'
+    })
+    .exec(function(err, member) {
+        if (err) {
+            console.error('error: ', err);
+            // status 500 server side error
+            return res.status(500).json({
+                title: 'An error occured [search borrow list]',
+                error: err
             });
+        }
+        return res.status(200).json({
+            message: 'search borrow list. success.',
+            obj: member.books
         });
+    });
 });
 
 /** API
@@ -119,11 +126,17 @@ router.post('/return', function(req, res) {
                     title: "Invalid Operation. Member didn't borrow this book [return book]"
                 });
             }
-            acc.books.pull(book);
-            book.borrower.pull(acc);
+            console.log("before", acc, book);
+
+            acc.books.splice(acc.books.indexOf(m_id), 1);
+            book.borrower.splice(book.borrower.indexOf(b_id), 1);
+            // acc.books.pull(book);
+            // book.borrower.pull(acc);
             book.remain = book.remain + 1;
             acc.save();
             book.save();
+
+            console.log("after", acc, book);
         });
     });
 

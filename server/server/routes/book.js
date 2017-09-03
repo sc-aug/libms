@@ -7,6 +7,14 @@ var Book = require('../models/book');
 
 const secret = 'my-secret-key';
 
+/******************************
+ * API for book operation
+ *   - add book
+ *   - update book
+ *   - delete book
+ *
+ ******************************/
+
 /**
  * check token validation
  * protect apis
@@ -61,44 +69,46 @@ router.post('/', function(req, res) {
     });
 });
 
-/** API
- * delete
- * auth: lib & admin
+/**
+ * delete book
+ * only available to the lib and admin
+ * token required
  */
 router.delete('/:id', function(req, res) {
-    console.log("server get bookID: ", req.params.id);
-    Book.find({ _id: req.params.id } , function(err, book) {
+    console.log("delete book server get _id: ", req.params.id);
+    Book.find({$and:[
+        {'_id': req.params.id},
+        {'borrower': [] },
+    ]}, function(err, acc) {
         if (err) {
             console.error('error: ', err);
             // status 500 server side error
             return res.status(500).json({
-                title: 'An error occured [fetch book] [delete]',
+                title: 'An error occured [delete book]',
                 error: err
             });
         }
-        // check exististance of account
-        if (! book) {
+    }).remove().exec(function(err, result) {
+        if (err) {
+            console.error('error: ', err);
+            // status 500 server side error
             return res.status(500).json({
-                title: 'No book found [delete]',
-                error: { message: 'No book found'}
+                title: 'An error occured [delete book] remove().exec()',
+                error: err
             });
         }
-        console.log("book fetched before delete! ", book);
-
-
-    }).remove().exec(function(err, result) {
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred [delete]',
-                    error: err
-                });
-            }
-            res.status(200).json({
-                message: 'Book deleted',
-                obj: result
-            });
+        if (result.result.n == 0) {
+          return res.status(500).json({
+              title: 'Make sure all copies have been returned.',
+              error: { message: 'copies of book not returned. [delete book]'}
+          });
+        }
+        return res.status(200).json({
+            message: 'The book was deleted.'
         });
+    });
 });
+
 
 /**
  * edit book api
