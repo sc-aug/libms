@@ -12,6 +12,7 @@ const secret = 'my-secret-key';
  *   - add book
  *   - update book
  *   - delete book
+ *   - // fetch all books
  *
  ******************************/
 
@@ -19,26 +20,35 @@ const secret = 'my-secret-key';
  * check token validation
  * protect apis
  */
-// router.use('/', function(req, res, next) { // this will be reach at each requst
-//     console.log("checking ... 'api/book/'");
-//     console.log("server get token", req.query.token);
-//     jwt.verify(req.query.token, secret, function(err, decoded) {
-//         if (err) {
-//             return res.status(401).json({
-//                 title: 'Not Authenticated',
-//                 error: err
-//             });
-//         }
-//         next(); // make sure request reaches code blow
-//     })
-// });
+router.use('/', function(req, res, next) { // this will be reach at each requst
+    // console.log("checking ... 'api/account/'");
+    // console.log("server get token", req.query.token);
+    jwt.verify(req.query.token, secret, function(err, decoded) {
+        if (err) {
+            return res.status(401).json({
+                title: 'Not Authenticated',
+                error: err
+            });
+        }
+        next(); // make sure request reaches code blow
+    })
+});
 
 /** API
  * add a book
  * auth: lib & admin
  */
 router.post('/', function(req, res) {
-    // console.log(req.body);
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'add new book not allowed.'
+        });
+    }
+
     var book = new Book({
         remain: req.body.remain,
         copy: req.body.copy,
@@ -76,6 +86,15 @@ router.post('/', function(req, res) {
  */
 router.delete('/:id', function(req, res) {
     console.log("delete book server get _id: ", req.params.id);
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'delete book not allowed.'
+        });
+    }
     Book.find({$and:[
         {'_id': req.params.id},
         {'borrower': [] },
@@ -115,8 +134,16 @@ router.delete('/:id', function(req, res) {
  * auth: lib & admin
  */
 router.patch('/:id', function(req, res) {
-    console.log("edit book. data: ", req.body);
-
+    //console.log("edit book. data: ", req.body);
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'edit book info not allowed.'
+        });
+    }
     Book.findById(req.params.id, function(err, book) {
         if (err) {
             return res.status(500).json({
@@ -163,6 +190,15 @@ router.patch('/:id', function(req, res) {
  * get all books - testing
  */
 router.get('/', function(req, res) {
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'fetch all books not allowed.'
+        });
+    }
     Book.find({}, function(err, books) {
         if (err) throw err;
         return res.json(books);

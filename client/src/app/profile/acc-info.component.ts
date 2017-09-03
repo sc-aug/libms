@@ -41,7 +41,6 @@ export class AccInfoComponent implements OnInit {
         data => {
           console.log(data);
           // put current book in localStorage
-          console.log(data.obj);
           this.updateLocalStorage(data.obj);
           this.router.navigateByUrl('/profile');
         },
@@ -144,6 +143,10 @@ export class AccInfoComponent implements OnInit {
   }
 
   authReturn() {
+    return this.isLib() || this.isAdmin();
+  }
+
+  authDelete() {
     return this.isLib() || this.isAdmin();
   }
 

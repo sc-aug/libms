@@ -18,8 +18,20 @@ var Book = require('../models/book');
  * borrow list
  * auth: lib & admin
  */
-router.get('/list/:m_id', function(req, res) {
-    var m_id = req.params.m_id;
+router.get('/list/:_id', function(req, res) {
+    // check authentication
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        if (auth != 'member' || decoded.acc._id != req.params._id) {
+            console.error('error: not admin or librarian.');
+            // not allowed
+            return res.status(405).json({
+                title: 'search borrow list. not allowed.'
+            });
+        }
+    }
+    var m_id = req.params._id;
     console.log("search borrow list: ", m_id);
     Account.findById(m_id)
     .populate('books', {
@@ -49,6 +61,16 @@ router.get('/list/:m_id', function(req, res) {
 router.post('/borrow', function(req, res) {
     var b_id = req.body.b_id;
     var m_id = req.body.m_id;
+    // check authentication
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'borrow book. not allowed.'
+        });
+    }
 
     Account.findById(m_id, function(err, acc) {
         if (err) {
@@ -96,7 +118,16 @@ router.post('/borrow', function(req, res) {
 router.post('/return', function(req, res) {
     var b_id = req.body.b_id;
     var m_id = req.body.m_id;
-
+    // check authentication
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'return book. not allowed.'
+        });
+    }
     Account.findById(m_id, function(err, acc) {
         if (err) {
             console.error('error: ', err);

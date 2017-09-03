@@ -35,6 +35,10 @@ router.get('/id/:id', function(req, res) {
     });
 });
 
+/** API
+ * search book by keywords
+ * auth: all
+ */
 router.get('/kw/:keywords', function(req, res) {
     var kw = req.params.keywords
     console.log("search book. keywords:", kw);

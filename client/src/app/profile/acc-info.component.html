@@ -51,7 +51,8 @@
         <button type="button" class="btn btn-default pull-right"
         [routerLink]="['/home']">Cancel</button>
         <button type="button" class="btn btn-danger pull-right"
-        (click)="onDelete()">Delete</button>
+          (click)="onDelete()"
+          *ngIf="authDelete()">Delete</button>
       </div>
     </div>
 

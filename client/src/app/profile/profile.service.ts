@@ -11,8 +11,11 @@ const headers = new Headers({'Content-Type': 'application/json'});
 export class ProfileService{
   constructor(private http: Http) {}
 
-  fetchBorrowList(m_id: string) {
-    return this.http.get(baseurl+'/api/trans/list/'+m_id, { headers: headers })
+  // param: _id. account-id
+  fetchBorrowList(_id: string) {
+    const me = JSON.parse(localStorage.getItem('me'));
+    const token = (me && me.token)  ? '?token=' + me.token : '';
+    return this.http.get(baseurl+'/api/trans/list/'+_id+token, { headers: headers })
       .map((response: Response) => response.json())
       .catch((error: Response) => Observable.throw(error.json())).toPromise();
   }

@@ -8,7 +8,7 @@
       <li routerLinkActive="active"><a [routerLink]="['view']">View</a></li>
 
       <li routerLinkActive="active"><a [routerLink]="['edit']"
-        [class.disabled]="isAuthorized() && bookSelected()">Edit</a></li>
+        [class.disabled]="isAuthorized()" *ngIf="isAuthorized()">Edit</a></li>
       <!-- <li routerLinkActive="active"><a [routerLink]="['logout']">Logout</a></li> -->
     </ul>
   </nav>

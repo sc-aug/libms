@@ -10,6 +10,7 @@ const secret = 'my-secret-key';
 /******************************
  * API for account operation
  *   - get account by id
+ *   - delete account by id
  *   - get collection of accounts by auth
  *
  ******************************/
@@ -18,19 +19,19 @@ const secret = 'my-secret-key';
  * check token validation
  * protect apis
  */
-// router.use('/', function(req, res, next) { // this will be reach at each requst
-//     // console.log("checking ... 'api/account/'");
-//     // console.log("server get token", req.query.token);
-//     jwt.verify(req.query.token, secret, function(err, decoded) {
-//         if (err) {
-//             return res.status(401).json({
-//                 title: 'Not Authenticated',
-//                 error: err
-//             });
-//         }
-//         next(); // make sure request reaches code blow
-//     })
-// });
+router.use('/', function(req, res, next) { // this will be reach at each requst
+    // console.log("checking ... 'api/account/'");
+    // console.log("server get token", req.query.token);
+    jwt.verify(req.query.token, secret, function(err, decoded) {
+        if (err) {
+            return res.status(401).json({
+                title: 'Not Authenticated',
+                error: err
+            });
+        }
+        next(); // make sure request reaches code blow
+    })
+});
 
 /** ??
  * profile - fetch
@@ -105,8 +106,21 @@ const secret = 'my-secret-key';
  * only available to the person and admin
  * token required
  */
-router.post('/:id', function(req, res) {
-    Account.findOne({ _id: req.params.id }, function(err, acc) {
+router.post('/:_id', function(req, res) {
+    // check authentication
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        if (auth != 'member' || decoded.acc._id != req.params._id) {
+            console.error('error: not admin or librarian.');
+            // not allowed
+            return res.status(405).json({
+                title: 'update profile. not allowed.'
+            });
+        }
+    }
+
+    Account.findOne({ _id: req.params._id }, function(err, acc) {
         if (err) {
             console.error('error: ', err);
             // status 500 server side error
@@ -124,7 +138,7 @@ router.post('/:id', function(req, res) {
         }
         acc.email = req.body.email;
         acc.uname = req.body.uname;
-        acc.auth = req.body.auth;
+        acc.auth = req.body.auth ? req.body.auth : acc.auth;
 
         acc.save(function(err, result) {
             if (err) {
@@ -150,6 +164,16 @@ router.post('/:id', function(req, res) {
  * token required
  */
  router.delete('/:id', function(req, res) {
+     // check authentication
+     const decoded = jwt.decode(req.query.token);
+     const auth = decoded.acc.auth;
+     if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+         console.error('error: not admin or librarian.');
+         // not allowed
+         return res.status(405).json({
+             title: 'update profile. not allowed.'
+         });
+     }
      console.log("delete account server get _id: ", req.params.id);
      Account.find({$and:[
          {'_id': req.params.id},

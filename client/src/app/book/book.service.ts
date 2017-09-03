@@ -17,9 +17,12 @@ export class BookService{
   addBook(book: Book) {
     const auth = JSON.parse(localStorage.getItem('me')).auth;
     const body = JSON.stringify(book);
+
+    const me = JSON.parse(localStorage.getItem('me'));
+    const token = (me && me.token)  ? '?token=' + me.token : '';
     // backend server will check auth in encrypted token
     if (auth && (auth == 'lib' || auth == 'admin')){
-      return this.http.post(baseurl+'/api/book/', body, { headers: headers })
+      return this.http.post(baseurl+'/api/book/'+token, body, { headers: headers })
         // transform the data we get back
         .map((response: Response) => response.json())
         // catch error
@@ -32,9 +35,11 @@ export class BookService{
   updateBook(book: Book) {
     const auth = JSON.parse(localStorage.getItem('me')).auth;
     const body = JSON.stringify(book);
-    // backend server will check auth in encrypted token
+
+    const me = JSON.parse(localStorage.getItem('me'));
+    const token = (me && me.token)  ? '?token=' + me.token : '';
     if (auth && (auth == 'lib' || auth == 'admin')){
-      return this.http.patch(baseurl+'/api/book/'+book._id, body, { headers: headers })
+      return this.http.patch(baseurl+'/api/book/'+book._id+token, body, { headers: headers })
         // transform the data we get back
         .map((response: Response) => response.json())
         // catch error
@@ -48,9 +53,11 @@ export class BookService{
     const auth = JSON.parse(localStorage.getItem('me')).auth;
     //console.log("bookID: ", book._id);
     const body = JSON.stringify(book);
-    // backend server will check auth in encrypted token
+
+    const me = JSON.parse(localStorage.getItem('me'));
+    const token = (me && me.token)  ? '?token=' + me.token : '';
     if (auth && (auth == 'lib' || auth == 'admin')){
-      return this.http.delete(baseurl+'/api/book/'+book._id, { headers: headers })
+      return this.http.delete(baseurl+'/api/book/'+book._id+token, { headers: headers })
         // transform the data we get back
         .map((response: Response) => response.json())
         // catch error

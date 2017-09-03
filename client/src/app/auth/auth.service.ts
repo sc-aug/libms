@@ -43,14 +43,17 @@ export class AuthService{
 
   updateAccount(id: string, update_acc: Account) {
     const body = JSON.stringify(update_acc);
-    //const token = (me && me.token)  ? '?token=' + me.token : '';
-    return this.http.post(baseurl+'/api/account/'+id, body, { headers: headers})
+    const me = JSON.parse(localStorage.getItem('me'));
+    const token = (me && me.token)  ? '?token=' + me.token : '';
+    return this.http.post(baseurl+'/api/account/'+id+token, body, { headers: headers})
       .map((response: Response) => response.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
   deleteAccount(id: string) {
-    return this.http.delete(baseurl+'/api/account/'+id, { headers: headers})
+    const me = JSON.parse(localStorage.getItem('me'));
+    const token = (me && me.token)  ? '?token=' + me.token : '';
+    return this.http.delete(baseurl+'/api/account/'+id+token, { headers: headers})
       .map((response: Response) => response.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
