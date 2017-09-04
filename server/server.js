@@ -8,6 +8,7 @@ const mongoose = require('mongoose'); // [SC] mongodb
 // Get our API routes
 const api = require('./server/routes/api');
 const account = require('./server/routes/account');
+const sign = require('./server/routes/sign');
 const book = require('./server/routes/book');
 const search = require('./server/routes/search');
 const trans = require('./server/routes/trans');
@@ -15,13 +16,23 @@ const trans = require('./server/routes/trans');
 const app = express();
 
 const DB = 'mylib';
-const uri = 'mongodb://mymongo:27017/'+DB;
+const uri = 'mongodb://mongo:27017/'+DB;
 const opt = { useMongoClient: true };
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri, opt, function(err) {
     if (err) console.error(err);
 });
+
+// CORS middleware
+const allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8000');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
+app.use(allowCrossDomain);
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -33,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our api routes
 app.use('/api/trans', trans);
 app.use('/api/account', account);
+app.use('/api/sign', sign);
 app.use('/api/book', book);
 app.use('/api/search', search);
 app.use('/api', api);

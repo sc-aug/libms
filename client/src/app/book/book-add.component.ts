@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BookService } from './book.service';
-import { SharedService } from './shared.service';
+import { SharedService } from '../share/shared.service';
 import { Book } from './book.model';
 
 @Component({
@@ -19,7 +19,9 @@ export class BookAddComponent {
   constructor(
     private bookService: BookService,
     private sharedService: SharedService,
-    private router: Router) {}
+    private router: Router) {
+      this.isAuthorized();
+    }
 
   onSubmit() {
     //console.log(this.bookForm.value);
@@ -49,7 +51,7 @@ export class BookAddComponent {
         err => console.log(err)
       );
   }
-  
+
   ngOnInit() {
     this.bookForm = new FormGroup({
       remain: new FormControl("", Validators.required),
@@ -62,5 +64,21 @@ export class BookAddComponent {
       subjects: new FormControl(""),
       discription: new FormControl("")
     });
+  }
+
+  isAuthorized() {
+    if (!this.isLib() && !this.isAdmin()) {
+      this.router.navigate(['/book-opt', 'view']);
+    }
+  }
+
+  isAdmin() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'admin';
+  }
+
+  isLib() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'lib';
   }
 }

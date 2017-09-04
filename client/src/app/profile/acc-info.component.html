@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h3>Account Info</h3>
+    </div>
+    <div class="col-sm-8 col-sm-offset-2">
+      <hr/>
+    </div>
+  </div>
+
+  <form class="form-horizontal"
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="inputEmail"
+      class="col-sm-2 col-sm-offset-2 control-label">Email</label>
+      <div class="col-sm-5">
+        <input type="email" class="form-control" id="inputEmail3"
+        placeholder="Email Address" required=""
+        [(ngModel)]="cur_people.email"
+        formControlName="email">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputUsername"
+      class="col-sm-2 col-sm-offset-2 control-label">Username</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputUsername"
+        placeholder="Username" required=""
+        [(ngModel)]="cur_people.uname"
+        formControlName="uname">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputAuth"
+      class="col-sm-2 col-sm-offset-2 control-label">Authentication</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputAuth"
+        [(ngModel)]="cur_people.auth"
+        formControlName="auth">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-5">
+        <button type="submit" class="btn btn-primary"
+        [disabled]="!profileForm.valid">Update</button>
+        <button type="button" class="btn btn-default pull-right"
+        [routerLink]="['/home']">Cancel</button>
+        <button type="button" class="btn btn-danger pull-right"
+          (click)="onDelete()"
+          *ngIf="authDelete()">Delete</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h3>Borrow List</h3>
+    </div>
+    <div class="col-sm-8 col-sm-offset-2">
+      <hr/>
+    </div>
+
+    <div class="col-sm-8 col-sm-offset-2 table-responsive">
+      <table class="table">
+        <thead>
+          <!-- <th>ID.</th> -->
+          <th>Title.</th>
+          <th>Author.</th>
+          <th *ngIf="authReturn()" width="100px">operation</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let b of borrow_list">
+            <!-- <td>{{ b._id }}</td> -->
+            <td class="txt">{{ b.title }}</td>
+            <td class="txt">{{ b.author }}</td>
+            <td *ngIf="authReturn()" width="100px">
+              <button type="button" class="btn btn-default pull-right"
+              (click)="onReturn()">return</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr/>
+    </div>
+  </div>
+
+</div>

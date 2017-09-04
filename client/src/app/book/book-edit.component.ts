@@ -18,21 +18,24 @@ export class BookEditComponent {
   constructor(
     private bookService: BookService,
     private router: Router) {
+    // only visible for admin & lib
+    this.isAuthorized();
 
     if (this.bookSelected()) {
       this.initForm();
       this.loadBook();
-    } else {
-      this.router.navigate(['/book-opt', 'view']);
     }
+    // else {
+    //   this.router.navigate(['/book-opt', 'view']);
+    // }
 
   }
 
   initForm() {
     this.bookForm = new FormGroup({
-      _id: new FormControl(""),
-      remain: new FormControl("", Validators.required),
-      copy: new FormControl("", Validators.required),
+      _id: new FormControl({ value: "", disabled: true}),
+      remain: new FormControl({ value: ""}, Validators.required),
+      copy: new FormControl({ value: ""}, Validators.required),
       title: new FormControl("", Validators.required),
       author: new FormControl("", Validators.required),
       publisher: new FormControl("", Validators.required),
@@ -104,18 +107,33 @@ export class BookEditComponent {
   }
 
   onDelete() {
-    localStorage.removeItem('cur_book');
     // const id = JSON.parse(localStorage.getItem('cur_book'))._id;
-    console.log(this.book);
+    //console.log(this.book);
     this.bookService.deleteBook(this.book)
       .subscribe(
         result => {
           console.log("[delete complete]", result);
           // this.loadBookForm(data);
           //console.log('deleted');
-
+          localStorage.removeItem('cur_book');
           this.router.navigate(['/book-opt', 'view']);
       });
+  }
+
+  isAuthorized() {
+    if (!this.isLib() && !this.isAdmin()) {
+      this.router.navigate(['/book-opt', 'view']);
+    }
+  }
+
+  isAdmin() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'admin';
+  }
+
+  isLib() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+    return tmp && tmp.token && tmp.auth == 'lib';
   }
 
 }

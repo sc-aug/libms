@@ -5,173 +5,110 @@ var jwt = require('jsonwebtoken');
 
 var Account = require('../models/account');
 
-/**
- * signup api
- * no protect required
- */
-router.post('/', function(req, res) {
-    console.log(req.body);
-    var acc = new Account({
-        uname: req.body.uname,
-        passwd: bcrypt.hashSync(req.body.passwd, 10),
-        email: req.body.email,
-        auth: "member"
-    });
-    acc.save(function(err, result) {
-        if (err) {
-            console.error('error: ', err);
-            // status 500 server side error
-            return res.status(500).json({
-                title: 'An error occured',
-                error: err
-            });
-        }
-        // 200: success and created
-        res.status(201).json({
-            message: 'Account Created',
-            obj: result
-        });
-    });
-});
+const secret = 'my-secret-key';
 
-/**
- * signin api
- * no protect required
- */
-router.post('/signin', function(req, res, next) {
-    // retriving user by email
-    // compare hashed password
-    Account.findOne({ email: req.body.email }, function(err, acc) {
-        if (err) {
-            console.error('error: ', err);
-            // status 500 server side error
-            return res.status(500).json({
-                title: 'An error occured',
-                error: err
-            });
-        }
-        // check exististance of account
-        if (! acc) {
-            return res.status(500).json({
-                title: 'No account found',
-                error: { message: 'Account could not be found'}
-            });
-        }
-        if (! bcrypt.compareSync(req.body.passwd, acc.passwd)) {
-            // authorization failed
-            return res.status(401).json({
-                title: 'Wrong password',
-                error: { message: 'Invalid login credentials'}
-            });
-        }
-        // generate token
-        var token = jwt.sign({ acc: acc }, 'my-secret-key', { expiresIn: 7200 });
-        res.status(200).json({
-            message: 'Successfully logged in',
-            token: token,
-            _id: acc._id,
-            uname: acc.uname,
-            auth: acc.auth,
-            email: acc.email
-        });
-    })
-});
+/******************************
+ * API for account operation
+ *   - get account by id
+ *   - delete account by id
+ *   - get collection of accounts by auth
+ *
+ ******************************/
 
 /**
  * check token validation
- * protect apis blow
+ * protect apis
  */
-// router.use('/', function(req, res, next) { // this will be reach at each requst
-//     jwt.verify(req.query.token, 'my-secret-key', function(err, decoded) {
+router.use('/', function(req, res, next) { // this will be reach at each requst
+    // console.log("checking ... 'api/account/'");
+    // console.log("server get token", req.query.token);
+    jwt.verify(req.query.token, secret, function(err, decoded) {
+        if (err) {
+            return res.status(401).json({
+                title: 'Not Authenticated',
+                error: err
+            });
+        }
+        next(); // make sure request reaches code blow
+    })
+});
+
+/** ??
+ * get account by id
+ * token required
+ */
+// router.get('/id/:id', function(req, res) {
+//     Account.findOne({ _id: req.params.id }, function(err, acc) {
 //         if (err) {
-//             return res.status(401).json({
-//                 title: 'Not Authenticated',
+//             console.error('error: ', err);
+//             return res.status(500).json({
+//                 title: 'An error occured [get account by id]',
 //                 error: err
 //             });
 //         }
-//         next(); // make sure request reaches code blow
-//     })
-// });
-
-/**
- * profile - fetch
- * only available to the person and admin
- * token required
- */
-router.get('/:uname', function(req, res) {
-     Account.findOne({ uname: req.params.uname }, function(err, acc) {
-        if (err) {
-            console.error('error: ', err);
-            // status 500 server side error
-            return res.status(500).json({
-                title: 'An error occured',
-                error: err
-            });
-        }
-        // check exististance of account
-        if (! acc) {
-            return res.status(500).json({
-                title: 'No account found',
-                error: { message: 'Account could not be found'}
-            });
-        }
-        res.status(200).json(acc);
-    });
-});
-
-/**
- * get account by id
- */
-router.get('/id/:id', function(req, res) {
-    Account.findOne({ _id: req.params.id }, function(err, acc) {
-        if (err) {
-            console.error('error: ', err);
-            return res.status(500).json({
-                title: 'An error occured [get account by id]',
-                error: err
-            });
-        }
-        if (! acc) {
-            return res.status(500).json({
-                title: 'No account found [get account by id]',
-                error: { message: 'Account could not be found [get account by id]'}
-            });
-        }
-        return res.status(200).json(acc);
-    });
-})
+//         if (! acc) {
+//             return res.status(500).json({
+//                 title: 'No account found [get account by id]',
+//                 error: { message: 'Account could not be found [get account by id]'}
+//             });
+//         }
+//         return res.status(200).json(acc);
+//     });
+// })
 
 /**
  * profile - update
  * only available to the person and admin
  * token required
  */
-router.post('/:uname', function(req, res) {
-    Account.findOne({ uname: req.params.uname }, function(err, acc) {
+router.post('/:_id', function(req, res) {
+    // check authentication
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        if (auth != 'member' || decoded.acc._id != req.params._id) {
+            console.error('error: not admin or librarian.');
+            // not allowed
+            return res.status(405).json({
+                title: 'Profile update failed',
+                error: { message: 'You are not allowed to update this profile.'}
+            });
+        }
+    }
+
+    if (req.params._id == '598e7571f6b487019fba6318') {
+        return res.status(500).json({
+            title: '[admin@admin] cannot be modified',
+            error: { message: 'This account is for testing and design to be fixed.'}
+        });
+    }
+
+    Account.findOne({ _id: req.params._id }, function(err, acc) {
         if (err) {
             console.error('error: ', err);
             // status 500 server side error
             return res.status(500).json({
-                title: 'An error occured [profile update]',
+                title: 'Profile update failed [while fetching account]',
                 error: err
             });
         }
         // check exististance of account
         if (! acc) {
             return res.status(500).json({
-                title: 'No account found',
+                title: 'Profile update failed',
                 error: { message: 'Account could not be found [profile update]'}
             });
         }
         acc.email = req.body.email;
         acc.uname = req.body.uname;
+        acc.auth = req.body.auth ? req.body.auth : acc.auth;
 
         acc.save(function(err, result) {
             if (err) {
                 console.error('error: ', err);
                 // status 500 server side error
                 return res.status(500).json({
-                    title: 'An error occured while update account data',
+                    title: 'Profile update failed [while updating account data]',
                     error: err
                 });
             }
@@ -185,11 +122,80 @@ router.post('/:uname', function(req, res) {
 });
 
 /**
+ * delete account
+ * only available to the lib and admin
+ * token required
+ */
+ router.delete('/:_id', function(req, res) {
+    // check authentication
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+       console.error('error: not admin or librarian.');
+       // not allowed
+       return res.status(405).json({
+           title: 'Delete profile failed. not allowed.',
+           error: { message: 'You are not allowed to delete this profile.'}
+       });
+    }
+    console.log(req.params._id == '598e7571f6b487019fba6318');
+    if (req.params._id == '598e7571f6b487019fba6318') {
+       return res.status(500).json({
+           title: '[admin@admin] cannot be modified',
+           error: { message: 'This account is for testing and design to be fixed.'}
+       });
+    } else {
+      console.log("delete account server get _id: ", req.params._id);
+      Account.find({$and:[
+         {'_id': req.params._id},
+         {'books': [] },
+      ]}, function(err, acc) {
+         if (err) {
+             console.error('error: ', err);
+             // status 500 server side error
+             return res.status(500).json({
+                 title: 'An error occured [delete account]',
+                 error: err
+             });
+         }
+      }).remove().exec(function(err, result) {
+         if (err) {
+             console.error('error: ', err);
+             // status 500 server side error
+             return res.status(500).json({
+                 title: 'An error occured [delete account] remove().exec()',
+                 error: err
+             });
+         }
+         if (result.result.n == 0) {
+           return res.status(500).json({
+               title: 'Make sure all books have been returned.',
+               error: { message: 'books not returned. [delete account]'}
+           });
+         }
+         return res.status(200).json({
+             message: 'The account was deleted.'
+         });
+      });
+    }
+ });
+
+/**
  * all account
- * only available to admin
+ * only available to admin & librarian
  * token required
  */
 router.get('/auth/:auth', function(req, res) {
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth && !auth == 'admin' && !auth == 'lib') {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'Fetch profile failed. not allowed.',
+            error: { message: 'You are not allowed to fetch profiles.'}
+        });
+    }
     Account.find({ auth: req.params.auth }, function(err, accs) {
         if (err) {
             console.error('error: ', err);
@@ -200,13 +206,12 @@ router.get('/auth/:auth', function(req, res) {
             });
         }
         // check exististance of account
-        if (! accs) {
-            return res.status(500).json({
-                title: 'No account found',
-                error: { message: 'No account found'}
-            });
-        }
-        
+        // if (! accs) {
+        //     return res.status(500).json({
+        //         title: 'No account found',
+        //         error: { message: 'No account found'}
+        //     });
+        // }
         res.status(200).json(accs);
     });
 });

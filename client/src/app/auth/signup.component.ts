@@ -23,7 +23,8 @@ export class SignupComponent implements OnInit {
       "",
       this.signupForm.value.email,
       this.signupForm.value.passwd,
-      this.signupForm.value.uname);
+      this.signupForm.value.uname,
+      this.signupForm.value.auth);
     // using service
     this.authService.signup(acc).
         subscribe(
@@ -35,13 +36,41 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initForm();
+  }
+
+  initForm() {
+    const tmp = JSON.parse(localStorage.getItem('me'));
+
+    if (tmp && tmp.auth == 'admin') {
+      this.initFormAuth();
+    } else {
+      this.initFormMemberAndLib();
+    }
+  }
+
+  initFormMemberAndLib() {
     this.signupForm = new FormGroup({
       uname: new FormControl("", Validators.required),
       passwd: new FormControl("", Validators.required),
       email: new FormControl("", [
         Validators.required,
         Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")
-        ])
+      ]),
+      auth: new FormControl({ value: "member", disabled: true }, Validators.required)
     });
   }
+
+  initFormAuth() {
+    this.signupForm = new FormGroup({
+      uname: new FormControl("", Validators.required),
+      passwd: new FormControl("", Validators.required),
+      email: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")
+      ]),
+      auth: new FormControl("", Validators.required)
+    });
+  }
+
 }

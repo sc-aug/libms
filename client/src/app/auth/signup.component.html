@@ -17,6 +17,11 @@
           class="form-control" placeholder="Username" required=""
           formControlName="uname">
 
+    <label for="inputName" class="sr-only">Auth</label>
+    <input type="text" id="inputAuth"
+          class="form-control" placeholder="Authorization" required=""
+          formControlName="auth">
+
     <button class="btn btn-lg btn-primary btn-block" type="submit"
           [disabled]="!signupForm.valid">Sign up</button>
   </form>

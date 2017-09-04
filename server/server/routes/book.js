@@ -1,31 +1,37 @@
 var express = require('express');
 var router = express.Router();
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+
 var Book = require('../models/book');
 
-/** API
- * get book by id
- * auth: all
+const secret = 'my-secret-key';
+
+/******************************
+ * API for book operation
+ *   - add book
+ *   - update book
+ *   - delete book
+ *   - // fetch all books
+ *
+ ******************************/
+
+/**
+ * check token validation
+ * protect apis
  */
-router.get('/:id', function(req, res) {
-    Book.findOne({ _id: req.params.id }, function(err, book) {
+router.use('/', function(req, res, next) { // this will be reach at each requst
+    // console.log("checking ... 'api/account/'");
+    // console.log("server get token", req.query.token);
+    jwt.verify(req.query.token, secret, function(err, decoded) {
         if (err) {
-            console.error('error: ', err);
-            // status 500 server side error
-            return res.status(500).json({
-                title: 'An error occured',
+            return res.status(401).json({
+                title: 'Not Authenticated',
                 error: err
             });
         }
-        // check exististance of account
-        if (! book) {
-            return res.status(500).json({
-                title: 'No book found',
-                error: { message: 'No book found'}
-            });
-        }
-        console.log(book);
-        res.status(200).json(book);
-    });
+        next(); // make sure request reaches code blow
+    })
 });
 
 /** API
@@ -33,7 +39,17 @@ router.get('/:id', function(req, res) {
  * auth: lib & admin
  */
 router.post('/', function(req, res) {
-    // console.log(req.body);
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation. [add book]'}
+        });
+    }
+
     var book = new Book({
         remain: req.body.remain,
         copy: req.body.copy,
@@ -45,7 +61,7 @@ router.post('/', function(req, res) {
         subjects: req.body.subjects,
         description: req.body.description
     });
-    
+
     // console.log(book);
     book.save(function(err, result) {
         if (err) {
@@ -64,52 +80,73 @@ router.post('/', function(req, res) {
     });
 });
 
-/** API
- * delete
- * auth: lib & admin
+/**
+ * delete book
+ * only available to the lib and admin
+ * token required
  */
 router.delete('/:id', function(req, res) {
-    console.log("server get bookID: ", req.params.id);
-    Book.find({ _id: req.params.id } , function(err, book) {
+    console.log("delete book server get _id: ", req.params.id);
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation.[delete book]'}
+        });
+    }
+    Book.find({$and:[
+        {'_id': req.params.id},
+        {'borrower': [] },
+    ]}, function(err, acc) {
         if (err) {
             console.error('error: ', err);
             // status 500 server side error
             return res.status(500).json({
-                title: 'An error occured [fetch book] [delete]',
+                title: 'An error occured [delete book]',
                 error: err
             });
         }
-        // check exististance of account
-        if (! book) {
+    }).remove().exec(function(err, result) {
+        if (err) {
+            console.error('error: ', err);
+            // status 500 server side error
             return res.status(500).json({
-                title: 'No book found [delete]',
-                error: { message: 'No book found'}
+                title: 'An error occured [delete book] remove().exec()',
+                error: err
             });
         }
-        console.log("book fetched before delete! ", book);
-
-        
-    }).remove().exec(function(err, result) {
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred [delete]',
-                    error: err
-                });
-            }
-            res.status(200).json({
-                message: 'Book deleted',
-                obj: result
-            });
+        if (result.result.n == 0) {
+          return res.status(500).json({
+              title: 'Make sure all copies have been returned.',
+              error: { message: 'copies of book not returned. [delete book]'}
+          });
+        }
+        return res.status(200).json({
+            message: 'The book was deleted.'
         });
+    });
 });
+
 
 /**
  * edit book api
  * auth: lib & admin
  */
 router.patch('/:id', function(req, res) {
-    console.log("get data during updating: ", req.body);
-
+    //console.log("edit book. data: ", req.body);
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation.[edit book]'}
+        });
+    }
     Book.findById(req.params.id, function(err, book) {
         if (err) {
             return res.status(500).json({
@@ -156,6 +193,16 @@ router.patch('/:id', function(req, res) {
  * get all books - testing
  */
 router.get('/', function(req, res) {
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+        console.error('error: not admin or librarian.');
+        // not allowed
+        return res.status(405).json({
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation. [fetch all books]'}
+        });
+    }
     Book.find({}, function(err, books) {
         if (err) throw err;
         return res.json(books);

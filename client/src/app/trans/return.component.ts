@@ -47,7 +47,7 @@ export class ReturnComponent implements OnInit {
   }
 
   fetchMembers() {
-    this.authService.fetchAllMembers().then(
+    this.authService.fetchAllMembers().subscribe(
       data => {
         localStorage.setItem('members', JSON.stringify(data));
         this.members = JSON.parse(localStorage.getItem('members'));
@@ -56,7 +56,7 @@ export class ReturnComponent implements OnInit {
   }
 
   fetchBooks() {
-    this.bookService.fetchAllBooks().then(
+    this.bookService.fetchAllBooks().subscribe(
       data => {
         this.books = data;
       },
