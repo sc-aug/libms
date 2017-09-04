@@ -6,6 +6,8 @@ var jwt = require('jsonwebtoken');
 var Account = require('../models/account');
 var Book = require('../models/book');
 
+const secret = 'my-secret-key';
+
 /******************************
  * API for book transactions
  *   - list borrowed book by account id
@@ -14,6 +16,24 @@ var Book = require('../models/book');
  *
  ******************************/
 
+ /**
+  * check token validation
+  * protect apis
+  */
+ router.use('/', function(req, res, next) { // this will be reach at each requst
+     // console.log("checking ... 'api/account/'");
+     // console.log("server get token", req.query.token);
+     jwt.verify(req.query.token, secret, function(err, decoded) {
+         if (err) {
+             return res.status(401).json({
+                 title: 'Not Authenticated',
+                 error: { message: 'Access Token Required' }
+             });
+         }
+         next(); // make sure request reaches code blow
+     })
+ });
+
 /** API
  * borrow list
  * auth: lib & admin
@@ -21,13 +41,14 @@ var Book = require('../models/book');
 router.get('/list/:_id', function(req, res) {
     // check authentication
     const decoded = jwt.decode(req.query.token);
-    const auth = decoded.acc.auth;
+    const auth = decoded.acc? decoded.acc.auth : null;
     if (auth != null && !(auth == 'admin' || auth == 'lib')) {
         if (auth != 'member' || decoded.acc._id != req.params._id) {
             console.error('error: not admin or librarian.');
             // not allowed
             return res.status(405).json({
-                title: 'search borrow list. not allowed.'
+                title: 'Not authorized.',
+                error: { message: 'Not Admin or Lib or you are accessing other people\'s profile.'}
             });
         }
     }
@@ -63,12 +84,13 @@ router.post('/borrow', function(req, res) {
     var m_id = req.body.m_id;
     // check authentication
     const decoded = jwt.decode(req.query.token);
-    const auth = decoded.acc.auth;
+    const auth = decoded.acc? decoded.acc.auth : null;
     if (auth != null && !(auth == 'admin' || auth == 'lib')) {
         console.error('error: not admin or librarian.');
         // not allowed
         return res.status(405).json({
-            title: 'borrow book. not allowed.'
+            title: 'borrow book. not allowed.',
+            error: { message: 'Not Admin or Librarian' }
         });
     }
 
@@ -98,7 +120,8 @@ router.post('/borrow', function(req, res) {
             }
             if (book.remain <= 0) {
                 return res.status(500).json({
-                    title: 'valid operation, 0 book left.'
+                    title: 'Invalid Operation.',
+                    error: { message: 'No more copy of this book available for borrow. [borrow book]'}
                 });
             }
             acc.books.push(book);
@@ -120,12 +143,13 @@ router.post('/return', function(req, res) {
     var m_id = req.body.m_id;
     // check authentication
     const decoded = jwt.decode(req.query.token);
-    const auth = decoded.acc.auth;
+    const auth = decoded.acc? decoded.acc.auth : null;
     if (auth != null && !(auth == 'admin' || auth == 'lib')) {
         console.error('error: not admin or librarian.');
         // not allowed
         return res.status(405).json({
-            title: 'return book. not allowed.'
+            title: 'Not authorized.',
+            error: { message: "Only Admin and Librarian can do this operation.[return book]" }
         });
     }
     Account.findById(m_id, function(err, acc) {
@@ -154,7 +178,8 @@ router.post('/return', function(req, res) {
             }
             if (acc.books.indexOf(book._id) == -1) {
                 return res.status(500).json({
-                    title: "Invalid Operation. Member didn't borrow this book [return book]"
+                    title: "Invalid Operation.",
+                    error: { message: "Member didn't borrow this book [return book]"}
                 });
             }
             console.log("before", acc, book);

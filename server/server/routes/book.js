@@ -45,7 +45,8 @@ router.post('/', function(req, res) {
         console.error('error: not admin or librarian.');
         // not allowed
         return res.status(405).json({
-            title: 'add new book not allowed.'
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation. [add book]'}
         });
     }
 
@@ -92,7 +93,8 @@ router.delete('/:id', function(req, res) {
         console.error('error: not admin or librarian.');
         // not allowed
         return res.status(405).json({
-            title: 'delete book not allowed.'
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation.[delete book]'}
         });
     }
     Book.find({$and:[
@@ -141,7 +143,8 @@ router.patch('/:id', function(req, res) {
         console.error('error: not admin or librarian.');
         // not allowed
         return res.status(405).json({
-            title: 'edit book info not allowed.'
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation.[edit book]'}
         });
     }
     Book.findById(req.params.id, function(err, book) {
@@ -196,7 +199,8 @@ router.get('/', function(req, res) {
         console.error('error: not admin or librarian.');
         // not allowed
         return res.status(405).json({
-            title: 'fetch all books not allowed.'
+            title: 'Not authorized.',
+            error: { message: 'Only Admin and Librarian are allowed to do this operation. [fetch all books]'}
         });
     }
     Book.find({}, function(err, books) {

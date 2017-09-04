@@ -39,7 +39,7 @@ export class LoadDataComponent implements OnInit {
   }
 
   onClick() {
-    this.authService.fetchAllMembers().then(
+    this.authService.fetchAllMembers().subscribe(
       data => {
         this.members.emit(data);
         console.log(this.members);
@@ -48,7 +48,7 @@ export class LoadDataComponent implements OnInit {
         console.error(err);
       });
 
-    this.bookService.fetchAllBooks().then(
+    this.bookService.fetchAllBooks().subscribe(
       data => {
         this.books.emit(data);
       },
@@ -58,6 +58,6 @@ export class LoadDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 }

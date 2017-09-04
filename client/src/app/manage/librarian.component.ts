@@ -16,8 +16,8 @@ export class LibrarianComponent {
   }
 
   initTest() {
-    this.authService.fetchAllLibrarians().
-      then(
+    this.authService.fetchAllLibrarians()
+      .subscribe(
         data => this.people = data,
         err => console.log(err));
   }

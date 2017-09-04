@@ -57,14 +57,14 @@ router.post('/in', function(req, res) {
         // check exististance of account
         if (! acc) {
             return res.status(500).json({
-                title: 'No account found',
+                title: 'Login failed',
                 error: { message: 'Account could not be found'}
             });
         }
         if (! bcrypt.compareSync(req.body.passwd, acc.passwd)) {
             // authorization failed
             return res.status(401).json({
-                title: 'Wrong password',
+                title: 'Login failed',
                 error: { message: 'Invalid login credentials'}
             });
         }

@@ -6,13 +6,15 @@ import { Observable } from 'rxjs';
 
 import { Book } from './book.model';
 
+import { ErrorService } from '../error/error.service';
+
 const baseurl = 'http://localhost:9000';
 const headers = new Headers({'Content-Type': 'application/json'});
 
 @Injectable()
 export class BookService{
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private errorService: ErrorService) {}
 
   addBook(book: Book) {
     const auth = JSON.parse(localStorage.getItem('me')).auth;
@@ -26,9 +28,17 @@ export class BookService{
         // transform the data we get back
         .map((response: Response) => response.json())
         // catch error
-        .catch((error: Response) => Observable.throw(error.json()));
+        .catch((error: Response) => {
+          this.errorService.handleError(error.json());
+          return Observable.throw(error.json());
+        });
     } else {
-      console.error('not authorized operation');
+      const err = {
+        title: "Fail to ADD BOOK",
+        error: { message: "You are not authorized to do this operation."}
+      };
+      this.errorService.handleError(err);
+      console.error(err);
     }
   }
 
@@ -43,9 +53,17 @@ export class BookService{
         // transform the data we get back
         .map((response: Response) => response.json())
         // catch error
-        .catch((error: Response) => Observable.throw(error.json()));
+        .catch((error: Response) => {
+          this.errorService.handleError(error.json());
+          return Observable.throw(error.json());
+        });
     } else {
-      console.error('not authorized operation');
+      const err = {
+        title: "Fail to UPDATE BOOK",
+        error: { message: "You are not authorized to do this operation."}
+      };
+      this.errorService.handleError(err);
+      console.error(err);
     }
   }
 
@@ -62,11 +80,30 @@ export class BookService{
         .map((response: Response) => response.json())
         // catch error
         .catch((error: Response) => {
+          this.errorService.handleError(error.json());
           return Observable.throw(error.json());
         });
     } else {
-      console.error('not authorized operation');
+      const err = {
+        title: "Fail to DELETE BOOK",
+        error: { message: "You are not authorized to do this operation."}
+      };
+      this.errorService.handleError(err);
+      console.error(err);
     }
+  }
+
+  fetchAllBooks() {
+    const me = JSON.parse(localStorage.getItem('me'));
+    const token = (me && me.token)  ? '?token=' + me.token : '';
+    return this.http.get(baseurl+'/api/book/'+token, { headers: headers})
+      // transform the data we get back
+      .map((response: Response) => response.json())
+      // catch error
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
   }
 
   searchBook(keywords: string) {
@@ -76,24 +113,22 @@ export class BookService{
         // transform the data we get back
         .map((response: Response) => response.json())
         // catch error
-        .catch((error: Response) => Observable.throw(error.json()));
+        .catch((error: Response) => {
+          this.errorService.handleError(error.json());
+          return Observable.throw(error.json());
+        });
     }
   }
 
   fetchBookById(id: string) {
     return this.http.get(baseurl+'/api/search/id/'+id, { headers: headers })
-        // transform the data we get back
-        .map((response: Response) => response.json())
-        // catch error
-        .catch((error: Response) => Observable.throw(error.json()));
-  }
-
-  fetchAllBooks() {
-    return this.http.get(baseurl+'/api/book/', { headers: headers})
       // transform the data we get back
       .map((response: Response) => response.json())
       // catch error
-      .catch((error: Response) => Observable.throw(error.json())).toPromise();
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
   }
 
 }

@@ -15,8 +15,8 @@ export class MemberComponent {
   }
 
   initTest() {
-    this.authService.fetchAllMembers().
-      then(
+    this.authService.fetchAllMembers()
+      .subscribe(
         data => this.people = data,
         err => console.log(err));
   }

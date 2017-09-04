@@ -6,12 +6,14 @@ import { Observable } from 'rxjs';
 
 import { Account } from './account.model';
 
+import { ErrorService } from '../error/error.service';
+
 const baseurl = 'http://localhost:9000';
 const headers = new Headers({'Content-Type': 'application/json'});
 
 @Injectable()
 export class AuthService{
-  constructor(private http: Http) {}
+  constructor(private http: Http, private errorService: ErrorService) {}
 
   signup(account: Account) {
     const body = JSON.stringify(account);
@@ -19,14 +21,20 @@ export class AuthService{
       // transform the data we get back
       .map((response: Response) => response.json())
       // catch error
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
   }
 
   signin(account: Account) {
     const body = JSON.stringify(account);
     return this.http.post(baseurl+'/api/sign/in', body, { headers: headers})
       .map((response: Response) => response.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json())
+      });
   }
 
   // fetchAccountById(_id: string) {
@@ -47,7 +55,10 @@ export class AuthService{
     const token = (me && me.token)  ? '?token=' + me.token : '';
     return this.http.post(baseurl+'/api/account/'+id+token, body, { headers: headers})
       .map((response: Response) => response.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json())
+      });
   }
 
   deleteAccount(id: string) {
@@ -55,7 +66,10 @@ export class AuthService{
     const token = (me && me.token)  ? '?token=' + me.token : '';
     return this.http.delete(baseurl+'/api/account/'+id+token, { headers: headers})
       .map((response: Response) => response.json())
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json())
+      });
   }
 
   fetchAllMembers() {
@@ -63,7 +77,10 @@ export class AuthService{
     const token = (me && me.token)  ? '?token=' + me.token : '';
     return this.http.get(baseurl+'/api/account/auth/'+'member' + token, { headers: headers })
       .map((response: Response) => response.json())
-      .catch((error: Response) => Observable.throw(error.json())).toPromise();
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json())
+      });
   }
 
   fetchAllLibrarians() {
@@ -71,7 +88,10 @@ export class AuthService{
     const token = (me && me.token)  ? '?token=' + me.token : '';
     return this.http.get(baseurl+'/api/account/auth/'+'lib' + token, { headers: headers })
       .map((response: Response) => response.json())
-      .catch((error: Response) => Observable.throw(error.json())).toPromise();
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json())
+      });
   }
 
   fetchAllAdmins() {
@@ -79,7 +99,10 @@ export class AuthService{
     const token = (me && me.token)  ? '?token=' + me.token : '';
     return this.http.get(baseurl+'/api/account/auth/'+'admin' + token, { headers: headers })
       .map((response: Response) => response.json())
-      .catch((error: Response) => Observable.throw(error.json())).toPromise();
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json())
+      });
   }
 
   logout() {

@@ -40,6 +40,8 @@ import { PeopleItemComponent } from './manage/people-item.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AccInfoComponent } from './profile/acc-info.component';
 
+import { ErrorComponent } from './error/error.component';
+
 import { appRouting } from './app.routing';
 
 import { AuthService } from './auth/auth.service';
@@ -47,6 +49,7 @@ import { SharedService } from './share/shared.service';
 import { BookService } from './book/book.service';
 import { TransService } from './trans/trans.service';
 import { ProfileService } from './profile/profile.service';
+import { ErrorService } from './error/error.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,8 @@ import { ProfileService } from './profile/profile.service';
     MemberComponent,
     PeopleItemComponent,
     ProfileComponent,
-    AccInfoComponent
+    AccInfoComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +96,8 @@ import { ProfileService } from './profile/profile.service';
     SharedService,
     BookService,
     TransService,
-    ProfileService
+    ProfileService,
+    ErrorService
   ],
   bootstrap: [AppComponent]
 })

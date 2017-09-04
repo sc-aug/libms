@@ -34,55 +34,10 @@ router.use('/', function(req, res, next) { // this will be reach at each requst
 });
 
 /** ??
- * profile - fetch
- * only available to the person and admin
- * token required
- */
-// router.get('/:uname', function(req, res) {
-//     const decoded = jwt.decode(req.query.token);
-//     const auth = decoded.acc.auth;
-//     if (auth && !auth == 'admin' && !auth == 'lib') {
-//         console.error('error: not admin or librarian.');
-//         // not allowed
-//         return res.status(405).json({
-//             title: 'fetch profile. not allowed.'
-//         });
-//     }
-//
-//     Account.findOne({ uname: req.params.uname }, function(err, acc) {
-//         if (err) {
-//             console.error('error: ', err);
-//             // status 500 server side error
-//             return res.status(500).json({
-//                 title: 'An error occured',
-//                 error: err
-//             });
-//         }
-//         // check exististance of account
-//         if (! acc) {
-//             return res.status(500).json({
-//                 title: 'No account found',
-//                 error: { message: 'Account could not be found'}
-//             });
-//         }
-//         res.status(200).json(acc);
-//     });
-// });
-
-/** ??
  * get account by id
  * token required
  */
 // router.get('/id/:id', function(req, res) {
-//     const decoded = jwt.decode(req.query.token);
-//     const auth = decoded.acc.auth;
-//     if (auth && !auth == 'admin' && !auth == 'lib') {
-//         console.error('error: not admin or librarian.');
-//         // not allowed
-//         return res.status(405).json({
-//             title: 'fetch profile. not allowed.'
-//         });
-//     }
 //     Account.findOne({ _id: req.params.id }, function(err, acc) {
 //         if (err) {
 //             console.error('error: ', err);
@@ -115,7 +70,8 @@ router.post('/:_id', function(req, res) {
             console.error('error: not admin or librarian.');
             // not allowed
             return res.status(405).json({
-                title: 'update profile. not allowed.'
+                title: 'Profile update failed',
+                error: { message: 'You are not allowed to update this profile.'}
             });
         }
     }
@@ -125,14 +81,14 @@ router.post('/:_id', function(req, res) {
             console.error('error: ', err);
             // status 500 server side error
             return res.status(500).json({
-                title: 'An error occured [profile update]',
+                title: 'Profile update failed [while fetching account]',
                 error: err
             });
         }
         // check exististance of account
         if (! acc) {
             return res.status(500).json({
-                title: 'No account found',
+                title: 'Profile update failed',
                 error: { message: 'Account could not be found [profile update]'}
             });
         }
@@ -145,7 +101,7 @@ router.post('/:_id', function(req, res) {
                 console.error('error: ', err);
                 // status 500 server side error
                 return res.status(500).json({
-                    title: 'An error occured while update account data',
+                    title: 'Profile update failed [while updating account data]',
                     error: err
                 });
             }
@@ -171,7 +127,8 @@ router.post('/:_id', function(req, res) {
          console.error('error: not admin or librarian.');
          // not allowed
          return res.status(405).json({
-             title: 'update profile. not allowed.'
+             title: 'Delete profile failed. not allowed.',
+             error: { message: 'You are not allowed to delete this profile.'}
          });
      }
      console.log("delete account server get _id: ", req.params.id);
@@ -220,7 +177,8 @@ router.get('/auth/:auth', function(req, res) {
         console.error('error: not admin or librarian.');
         // not allowed
         return res.status(405).json({
-            title: 'fetch profile. not allowed.'
+            title: 'Fetch profile failed. not allowed.',
+            error: { message: 'You are not allowed to fetch profiles.'}
         });
     }
     Account.find({ auth: req.params.auth }, function(err, accs) {
@@ -233,12 +191,12 @@ router.get('/auth/:auth', function(req, res) {
             });
         }
         // check exististance of account
-        if (! accs) {
-            return res.status(500).json({
-                title: 'No account found',
-                error: { message: 'No account found'}
-            });
-        }
+        // if (! accs) {
+        //     return res.status(500).json({
+        //         title: 'No account found',
+        //         error: { message: 'No account found'}
+        //     });
+        // }
         res.status(200).json(accs);
     });
 });

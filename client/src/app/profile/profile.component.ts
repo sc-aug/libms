@@ -56,7 +56,7 @@ export class ProfileComponent {
   fetchBorrowList() {
     if ( ! this.cur_people ) return;
     this.profileService.fetchBorrowList(this.cur_people._id)
-      .then(
+      .subscribe(
         data => this.borrow_list = data.obj,
         err => console.error(err)
       );

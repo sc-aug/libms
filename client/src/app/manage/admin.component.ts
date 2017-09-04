@@ -16,8 +16,8 @@ export class AdminComponent {
   }
 
   initTest() {
-    this.authService.fetchAllAdmins().
-      then(
+    this.authService.fetchAllAdmins()
+      .subscribe(
         data => this.people = data,
         err => console.log(err));
   }
