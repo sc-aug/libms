@@ -47,7 +47,7 @@ export class BorrowComponent implements OnInit {
   }
 
   fetchMembers() {
-    this.authService.fetchAllMembers().subscribe(
+    this.authService.fetchAccountByAuth('member').subscribe(
       data => {
         localStorage.setItem('members', JSON.stringify(data));
         this.members = JSON.parse(localStorage.getItem('members'));

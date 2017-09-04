@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProfileService } from './profile.service';
+import { AuthService } from '../auth/auth.service';
+import { SharedService } from '../share/shared.service';
 import { Account } from '../auth/account.model';
 
 @Component({
@@ -16,7 +18,11 @@ export class ProfileComponent {
   // for borrow list: data of books
   borrow_list: any;
 
-  constructor(private profileService: ProfileService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private sharedService: SharedService,
+    private profileService: ProfileService,
+    private router: Router) {
     // account data: me &
     this.loadAccountData();
     // check validation
@@ -28,6 +34,10 @@ export class ProfileComponent {
   loadAccountData() {
     this.me = JSON.parse(localStorage.getItem('me'));
     this.cur_people = JSON.parse(localStorage.getItem('cur_people'));
+    if (! this.me) {
+      this.authService.logout();
+      this.sharedService.publishCurrentAcc(null);
+    }
   }
 
   authValidation() {

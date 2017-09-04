@@ -33,7 +33,7 @@ export class AuthService{
       .map((response: Response) => response.json())
       .catch((error: Response) => {
         this.errorService.handleError(error.json());
-        return Observable.throw(error.json())
+        return Observable.throw(error.json());
       });
   }
 
@@ -57,7 +57,7 @@ export class AuthService{
       .map((response: Response) => response.json())
       .catch((error: Response) => {
         this.errorService.handleError(error.json());
-        return Observable.throw(error.json())
+        return Observable.throw(error.json());
       });
   }
 
@@ -68,40 +68,18 @@ export class AuthService{
       .map((response: Response) => response.json())
       .catch((error: Response) => {
         this.errorService.handleError(error.json());
-        return Observable.throw(error.json())
+        return Observable.throw(error.json());
       });
   }
 
-  fetchAllMembers() {
+  fetchAccountByAuth(auth: string) {
     const me = JSON.parse(localStorage.getItem('me'));
     const token = (me && me.token)  ? '?token=' + me.token : '';
-    return this.http.get(baseurl+'/api/account/auth/'+'member' + token, { headers: headers })
+    return this.http.get(baseurl+'/api/account/auth/'+ auth + token, { headers: headers })
       .map((response: Response) => response.json())
       .catch((error: Response) => {
         this.errorService.handleError(error.json());
-        return Observable.throw(error.json())
-      });
-  }
-
-  fetchAllLibrarians() {
-    const me = JSON.parse(localStorage.getItem('me'));
-    const token = (me && me.token)  ? '?token=' + me.token : '';
-    return this.http.get(baseurl+'/api/account/auth/'+'lib' + token, { headers: headers })
-      .map((response: Response) => response.json())
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json())
-      });
-  }
-
-  fetchAllAdmins() {
-    const me = JSON.parse(localStorage.getItem('me'));
-    const token = (me && me.token)  ? '?token=' + me.token : '';
-    return this.http.get(baseurl+'/api/account/auth/'+'admin' + token, { headers: headers })
-      .map((response: Response) => response.json())
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json())
+        return Observable.throw(error.json());
       });
   }
 

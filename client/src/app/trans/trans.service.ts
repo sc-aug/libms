@@ -24,7 +24,7 @@ export class TransService {
 
   borrowBook(b_id: string, m_id: string) {
     const body = JSON.stringify({"b_id": b_id, "m_id": m_id});
-    console.log(body);
+    //console.log(body);
 
     const me = JSON.parse(localStorage.getItem('me'));
     const token = (me && me.token)  ? '?token=' + me.token : '';
