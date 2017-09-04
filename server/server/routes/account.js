@@ -76,6 +76,13 @@ router.post('/:_id', function(req, res) {
         }
     }
 
+    if (req.params._id == '598e7571f6b487019fba6318') {
+        return res.status(500).json({
+            title: '[admin@admin] cannot be modified',
+            error: { message: 'This account is for testing and design to be fixed.'}
+        });
+    }
+
     Account.findOne({ _id: req.params._id }, function(err, acc) {
         if (err) {
             console.error('error: ', err);
@@ -119,23 +126,30 @@ router.post('/:_id', function(req, res) {
  * only available to the lib and admin
  * token required
  */
- router.delete('/:id', function(req, res) {
-     // check authentication
-     const decoded = jwt.decode(req.query.token);
-     const auth = decoded.acc.auth;
-     if (auth != null && !(auth == 'admin' || auth == 'lib')) {
-         console.error('error: not admin or librarian.');
-         // not allowed
-         return res.status(405).json({
-             title: 'Delete profile failed. not allowed.',
-             error: { message: 'You are not allowed to delete this profile.'}
-         });
-     }
-     console.log("delete account server get _id: ", req.params.id);
-     Account.find({$and:[
-         {'_id': req.params.id},
+ router.delete('/:_id', function(req, res) {
+    // check authentication
+    const decoded = jwt.decode(req.query.token);
+    const auth = decoded.acc.auth;
+    if (auth != null && !(auth == 'admin' || auth == 'lib')) {
+       console.error('error: not admin or librarian.');
+       // not allowed
+       return res.status(405).json({
+           title: 'Delete profile failed. not allowed.',
+           error: { message: 'You are not allowed to delete this profile.'}
+       });
+    }
+    console.log(req.params._id == '598e7571f6b487019fba6318');
+    if (req.params._id == '598e7571f6b487019fba6318') {
+       return res.status(500).json({
+           title: '[admin@admin] cannot be modified',
+           error: { message: 'This account is for testing and design to be fixed.'}
+       });
+    } else {
+      console.log("delete account server get _id: ", req.params._id);
+      Account.find({$and:[
+         {'_id': req.params._id},
          {'books': [] },
-     ]}, function(err, acc) {
+      ]}, function(err, acc) {
          if (err) {
              console.error('error: ', err);
              // status 500 server side error
@@ -144,7 +158,7 @@ router.post('/:_id', function(req, res) {
                  error: err
              });
          }
-     }).remove().exec(function(err, result) {
+      }).remove().exec(function(err, result) {
          if (err) {
              console.error('error: ', err);
              // status 500 server side error
@@ -162,7 +176,8 @@ router.post('/:_id', function(req, res) {
          return res.status(200).json({
              message: 'The account was deleted.'
          });
-     });
+      });
+    }
  });
 
 /**
