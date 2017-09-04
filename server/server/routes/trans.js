@@ -182,7 +182,6 @@ router.post('/return', function(req, res) {
                     error: { message: "Member didn't borrow this book [return book]"}
                 });
             }
-            console.log("before", acc, book);
 
             acc.books.splice(acc.books.indexOf(m_id), 1);
             book.borrower.splice(book.borrower.indexOf(b_id), 1);
@@ -191,8 +190,6 @@ router.post('/return', function(req, res) {
             book.remain = book.remain + 1;
             acc.save();
             book.save();
-
-            console.log("after", acc, book);
         });
     });
 
