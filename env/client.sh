@@ -4,7 +4,7 @@
 # My new Image Name
 MYIN="ng-img"
 
-CN="ng-lib"
+CN="angular"
 CHN="client"
 
 docker container stop $CN
