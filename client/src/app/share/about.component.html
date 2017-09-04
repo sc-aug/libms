@@ -1,1 +1,197 @@
-about
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <hr/>
+      <h2>Library Management System</h2>
+      <hr/>
+      <p>A basic library management system using Angular as front-end, Express as back-end, and MongoDB as database</p>
+      <p><label for="">source code: </label> <a href="https://github.com/sc-aug/libms">github</a></p>
+      <p>
+        <label for="">admin account: </label> [ Email: admin@admin ] [Password: admin ]
+      </p>
+      <p>
+        <label for="">problem remained: </label> The performance of borrow and return is slow due to the low performance of mongodb.
+      </p>
+      <p style="color: red;">
+        <label for="">Notice: </label> **admin account is for testing, and designed to be fixed, so infomation of admin account cannot be modified.**
+      </p>
+      <hr/>
+
+      <h3>System Feature</h3>
+
+      <ul>
+        <li>
+          <label for="">Book Operation</label>
+          <ul>
+            <li>add book</li>
+            <li>view book</li>
+            <li>update book</li>
+            <li>delete book</li>
+          </ul>
+        </li>
+        <li>
+          <label for="">Book Transaction</label>
+          <ul>
+            <li>borrow book</li>
+            <li>return book</li>
+            <li>list borrowed book</li>
+          </ul>
+        </li>
+        <li>
+          <label for="">Account Operation</label>
+          <ul>
+            <li>Sign up</li>
+            <li>Sign in</li>
+            <li>Logout</li>
+            <li>View Account Info</li>
+            <li>Update Account</li>
+            <li>Delete Account</li>
+            <li>List Accounts</li>
+          </ul>
+        </li>
+      </ul>
+
+      <hr/>
+
+      <h3>Authorization</h3>
+      <table class="table table-responsive table-striped">
+        <thead>
+          <th width="40%">Operation</th>
+          <th width="15%">Guest</th>
+          <th width="15%">Member</th>
+          <th width="15%">Librarian</th>
+          <th width="15%">Admin</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Home Page</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>About Page</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Search Book</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>View Book Detail</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Signin</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Create Member Account</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Create Librarian Account</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Create Admin Account</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Delete Member Account</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Delete Librarian Account</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Add Book</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Edit Book</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Delete Book</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Borrow Book</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>Return Book</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>List Members</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>List Librarians</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+          </tr>
+          <tr>
+            <td>List Admins</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>o</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
