@@ -4,19 +4,16 @@ Development Environment
   - front-end: Angular 
   - back-end: Express
   - DB: MongoDB
-  - check `env` folder for more detail
 
 Basic Function
   - Book
     . search book
-    . view book detail
-    . edit book
-    . delete book
+    . CRUD operation
   - Transaction
-    . borrow book
-    . return book
+    . borrow/return book
   - Account
-    . signup
-    . signin
-    . logout
-    . check profile
+    . CRUD operation
+
+Feature
+  - 4 types of user: member, librarian, admin, guest (not registered/signed in)
+  - Token based back-end authentication & authrization
