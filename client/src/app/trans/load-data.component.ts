@@ -39,7 +39,7 @@ export class LoadDataComponent implements OnInit {
   }
 
   onClick() {
-    this.authService.fetchAllMembers().subscribe(
+    this.authService.fetchAccountByAuth("member").subscribe(
       data => {
         this.members.emit(data);
         console.log(this.members);
